@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, Platform, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import ModalFilterPicker from 'react-native-modal-filter-picker';
-import { Actions, ActionConst } from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 import axios from 'axios';
 import { ulkeID, ulkeIsim } from '../redux/actions/index';
-import SehirSec from './SehirSec';
-
 
 class UlkeSec extends Component {
     state = {
@@ -45,7 +43,7 @@ class UlkeSec extends Component {
             visible: false,
             label
         });
-        Actions.Sehir({ type: ActionConst.PUSH });
+        Actions.Sehir();
     }
 
     render() {

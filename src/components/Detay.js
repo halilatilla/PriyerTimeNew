@@ -6,10 +6,6 @@ import { dataChange } from '../redux/actions/index';
 
 
 class Detay extends Component {
-      // state = {
-      //       datavakitler: ''
-      // }
-
       componentWillMount = () => { //vakitler data
             axios.get(`https://ezanvakti.herokuapp.com/vakitler?ilce=${this.props.ilceid}`)
                   .then(response => this.props.dataChange({ datavakitler: response.data }))
@@ -20,19 +16,16 @@ class Detay extends Component {
       }
 
       render() {
-            console.log(this.props.data);
             const mapGelenData = this.props.datavakitler.map((resp, id) => {
                   if (id === 0) {
-                        return <Text key={id} style={styles.containerStyle}>
-                              İmsak {resp.Imsak}   Güneş{resp.Gunes}   Öğle{resp.Ogle}   İkindi{resp.Ikindi}   Akşam{resp.Aksam}   Yatsı{resp.Yatsi} </Text>;
+                        return (<Text key={id} style={styles.containerStyle}>
+                              İmsak {resp.Imsak}   Güneş{resp.Gunes}   
+                              Öğle{resp.Ogle}   İkindi{resp.Ikindi}   
+                              Akşam{resp.Aksam}   Yatsı{resp.Yatsi} </Text>);
                   }
             });
-
-            const { containerStyle } = styles;
-            console.log('LİSTE component');
-
             return (
-                  <View style={containerStyle} >
+                  <View>
                         {mapGelenData}
 
                   </View>

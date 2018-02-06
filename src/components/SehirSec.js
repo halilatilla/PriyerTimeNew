@@ -67,7 +67,7 @@ class SehirSec extends Component {
 
         );
 }
-};
+}
 
 const styles = StyleSheet.create({
     viewStyle: {
