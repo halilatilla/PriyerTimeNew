@@ -7,7 +7,6 @@ const INITIAL_STATE = {
     ulkeid: '',
     ulkeisim: ''
 };
-console.log(`Ulke Id ${INITIAL_STATE.ulkeid}`);
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {

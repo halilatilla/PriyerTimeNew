@@ -5,6 +5,7 @@ import { createStore, applyMiddleware } from 'redux';
 import ReduxThank from 'redux-thunk';
 import reducers from './src/redux/reducers';
 import Router from './src/components/Router';
+//import Anasayfa from './src/components/AnaSayfa';
 
 export default class App extends Component<{}> {
   render() {

@@ -42,7 +42,7 @@ class IlceSec extends Component {
             visible: false,
             label
         });   
-        Actions.Detay({ type: ActionConst.REFRESH });
+        Actions.Detay();
     }
    
 
