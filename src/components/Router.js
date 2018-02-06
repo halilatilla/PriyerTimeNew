@@ -1,22 +1,25 @@
 
 import React from 'react';
-import { Scene, Router, Stack } from 'react-native-router-flux';
+//import { View } from 'react-native';
+import { Scene, Router } from 'react-native-router-flux';
 import UlkeSec from './UlkeSec';
 import SehirSec from './SehirSec';
 import IlceSec from './IlceSec';
 import Detay from './Detay';
+//import Main from './Main';
 
 
 const RouterComponent = () => {
 return (
 <Router>
-    <Stack key="basla" >
-    <Scene key="Ulke" component={UlkeSec} title="Naman Vakitleri" initial />
-    <Scene key="Sehir" component={SehirSec} title="Ana Ekran" />
-    <Scene key="Ilce" component={IlceSec} title="Naman Vakitleri" />
+    <Scene key="basla" direction='horizontal' >
+    <Scene key="Ulke" component={UlkeSec} title="Ulke Seç" initial />
+    <Scene key="Sehir" component={SehirSec} title="Şehir Seç" />
+    <Scene key="Ilce" component={IlceSec} title="İlçe Seç" />
     <Scene key="Detay" component={Detay} title="Naman Vakitleri" />
-    </Stack>
+   {/* //<Scene key="main" component={Main} title="Ana Ekran" /> */}
 
+    </Scene>
 </Router>
 
 );

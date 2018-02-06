@@ -18,15 +18,28 @@ class Detay extends Component {
       render() {
             const mapGelenData = this.props.datavakitler.map((resp, id) => {
                   if (id === 0) {
-                        return (<Text key={id} style={styles.containerStyle}>
-                              İmsak {resp.Imsak}   Güneş{resp.Gunes}   
-                              Öğle{resp.Ogle}   İkindi{resp.Ikindi}   
-                              Akşam{resp.Aksam}   Yatsı{resp.Yatsi} </Text>);
+                        return (<View key={id} style={styles.subcontainerStyle}> 
+                        <Text style={styles.textStyle}>İmsak    -     {resp.Imsak}</Text>
+                        <Text style={styles.textStyle}>Güneş    -    {resp.Gunes}</Text>
+                        <Text style={styles.textStyle}>Öğle       -    {resp.Ogle}</Text>
+                        <Text style={styles.textStyle}>İkindi     -     {resp.Ikindi}</Text>
+                        <Text style={styles.textStyle}>Akşam   -    {resp.Aksam}</Text>
+                        <Text style={styles.textStyle}>Yatsı      -     {resp.Yatsi}</Text>
+                              </View>);
                   }
             });
             return (
                   <View>
-                        {mapGelenData}
+
+                        <View style={{ alignItems: 'center', margin: 10, padding: 10 }} >
+                              <Text> {this.props.ulkeisim} </Text>
+                              <Text> {this.props.sehirisim} </Text>
+                              <Text> {this.props.ilcead} </Text>
+                        </View>
+                        <View style={styles.containerStyle}>
+                              {mapGelenData}
+                        </View>
+
 
                   </View>
             );
@@ -45,35 +58,36 @@ const styles = StyleSheet.create({
             elevation: 1,
             marginLeft: 5,
             marginRight: 5,
-            marginTop: Platform.OS === 'ios' ? 30 : 10,
-            padding: 20,
+            marginTop: Platform.OS === 'ios' ? 50 : 10,
+            alignItems: 'center'
 
-
-      },
-      subcontainerStyle: {
-            borderBottomWidth: 1,
-            padding: 5,
-            backgroundColor: '#fff',
-            justifyContent: 'center',
-            flexDirection: 'row',
-            borderColor: '#ddd',
-            position: 'relative',
-            flex: 1
-
-      },
+        
+          },
+          subContainerStyle: {
+          borderBottomWidth: 1,
+          padding: 5,
+          backgroundColor: '#fff',
+          justifyContent: 'flex-start',
+          flexDirection: 'row',
+          borderColor: '#ddd',
+          position: 'relative',
+          alignItems: 'center'
+        },
       textStyle: {
             fontSize: 30,
             padding: 10,
             fontWeight: 'bold',
-            //fontFamily: 'vincHand'
-      },
+            alignItems: 'center'
+
+            
+      }
 }
 );
 
 
 const mapStateToProps = ({ dataResponse }) => {
-      const { datavakitler, ilceid } = dataResponse;
-      return { datavakitler, ilceid };
+      const { datavakitler, ilceid, ulkeisim, ilcead, sehirisim } = dataResponse;
+      return { datavakitler, ilceid, ulkeisim, ilcead, sehirisim };
 };
 
 export default connect(mapStateToProps, { dataChange })(Detay);

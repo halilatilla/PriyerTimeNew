@@ -55,9 +55,9 @@ class UlkeSec extends Component {
         return (
             <View style={styles.viewStyle} >
                 <TouchableOpacity onPress={this.onShow}>
-                    <Text style={styles.ilcesecStyle}>Ülke Seçmek İçin Tıklayınız</Text>
+                    <Text>Ülke Seçmek İçin Tıklayınız</Text>
                 </TouchableOpacity>
-                <Text style={styles.secilenStyle} >{label}</Text>
+                <Text>{label}</Text>
                 <ModalFilterPicker
                     visible={visible}
                     onSelect={this.onSelect}
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     viewStyle: {
         marginTop: Platform.OS === 'ios' ? 10 : 0,
         alignItems: 'center',
+        flex: 1
     },
 }
 );

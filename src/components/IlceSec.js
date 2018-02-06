@@ -6,6 +6,7 @@ import { Actions } from 'react-native-router-flux';
 import axios from 'axios';
 import { ilceID, ilceIsim } from '../redux/actions/index';
 
+
 class IlceSec extends Component {
     state = {
         visible: false,
@@ -48,7 +49,6 @@ class IlceSec extends Component {
 
     render() {
          console.log('İLÇESec component');
-        
         const { visible, label } = this.state;
         return (
             <View style={styles.viewStyle} >
@@ -65,8 +65,8 @@ class IlceSec extends Component {
                         { label: item.IlceAdi, key: item.IlceID } 
                        ))}
                 />
-
             </View>
+
         );
     }
 }
