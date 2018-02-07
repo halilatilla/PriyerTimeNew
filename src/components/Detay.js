@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Platform, Button } from 'react-native';
+import { Text, View, StyleSheet, Platform, Button, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
@@ -19,6 +19,15 @@ class Detay extends Component {
       buttonMain = () => {
             Actions.Ulke();
       }
+      buttonUlke = () => {
+            Actions.Ulke();
+      }
+      buttonSehir = () => {
+            Actions.Sehir();
+      }
+      buttonIlce = () => {
+            Actions.Ilce();
+      }
 
       render() {
             const mapGelenData = this.props.datavakitler.map((resp, id) => {
@@ -36,21 +45,25 @@ class Detay extends Component {
             return (
                   <View>
                         <View style={styles.viewStyle} >
-                              <Text style={styles.textSecond}> {this.props.ulkeisim} </Text>
-                              <Text style={styles.textSecond}> {this.props.sehirisim} </Text>
+                              <TouchableOpacity onPress={this.buttonUlke}>
+                                    <Text style={styles.textSecond}> {this.props.ulkeisim} </Text>
+                              </TouchableOpacity>
+
+                              <TouchableOpacity onPress={this.buttonSehir}>
+                                    <Text style={styles.textSecond}> {this.props.sehirisim} </Text>
+                              </TouchableOpacity>
+                              <TouchableOpacity onPress={this.buttonIlce}>
                               <Text style={styles.textSecond}> {this.props.ilcead} </Text>
+                              </TouchableOpacity>
+
                         </View>
                         <View>
                               <Button onPress={this.buttonMain} title='Değiştir' />
-
                         </View>
-
 
                         <View style={styles.containerStyle}>
                               {mapGelenData}
                         </View>
-
-
                   </View>
             );
       }
