@@ -96,7 +96,9 @@ const styles = StyleSheet.create({
             alignItems: 'center'
       },
       viewStyle: {
-            alignItems: 'center'
+            alignItems: 'center',
+            marginTop: Platform.OS === 'ios' ? 10 : 1,
+            padding: Platform.OS === 'ios' ? 5 : 1,
 
       }
 }

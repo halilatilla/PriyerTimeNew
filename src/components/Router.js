@@ -10,19 +10,18 @@ import Detay from './Detay';
 
 
 const RouterComponent = () => {
-return (
-<Router>
-    <Scene key="basla" direction='horizontal' >
-    <Scene key="Ulke" component={UlkeSec} title="Ulke Seç" initial />
-    <Scene key="Sehir" component={SehirSec} title="Şehir Seç" />
-    <Scene key="Ilce" component={IlceSec} title="İlçe Seç" />
-    <Scene key="Detay" component={Detay} title="Naman Vakitleri" />
-   {/* //<Scene key="main" component={Main} title="Ana Ekran" /> */}
+    return (
+        <Router>
+            <Scene key="root" >
+               
+                    <Scene key="Ulke" component={UlkeSec} title="Ulke Seç" initial />
+                    <Scene key="Sehir" component={SehirSec} title="Şehir Seç" />
+                    <Scene key="Ilce" component={IlceSec} title="İlçe Seç" />
+                        <Scene key="Detay" component={Detay} title="Naman Vakitleri" />     
+             </Scene>
+        </Router>
 
-    </Scene>
-</Router>
-
-);
+            );
 };
 
 export default RouterComponent;
