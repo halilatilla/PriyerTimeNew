@@ -29,7 +29,7 @@ class Detay extends Component {
             Actions.Ilce();
       }
 
-      render() {
+      render() { /* eslint-disable */
             const mapGelenData = this.props.datavakitler.map((resp, id) => {
                   if (id === 0) {
                         return (<View key={id} style={styles.subcontainerStyle}>
@@ -41,7 +41,7 @@ class Detay extends Component {
                               <Text style={styles.textStyle}>Yatsı      -     {resp.Yatsi}</Text>
                         </View>);
                   }
-            });
+            }); /* eslint-enaable */
             return (
                   <View>
                         <View style={styles.viewStyle} >
@@ -53,7 +53,7 @@ class Detay extends Component {
                                     <Text style={styles.textSecond}> {this.props.sehirisim} </Text>
                               </TouchableOpacity>
                               <TouchableOpacity onPress={this.buttonIlce}>
-                              <Text style={styles.textSecond}> {this.props.ilcead} </Text>
+                                    <Text style={styles.textSecond}> {this.props.ilcead} </Text>
                               </TouchableOpacity>
 
                         </View>
