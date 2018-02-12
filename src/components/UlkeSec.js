@@ -44,7 +44,7 @@ class UlkeSec extends Component {
             visible: false,
             label
         });
-        Actions.Sehir();
+        Actions.Sehir({ type: 'reset' });
     }
 
     render() {

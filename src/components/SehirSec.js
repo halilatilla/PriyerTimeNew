@@ -44,7 +44,7 @@ class SehirSec extends Component {
             visible: false,
             label
         });
-        Actions.Ilce();
+        Actions.Ilce({ type: 'reset' });
         //Ilce();
     }
 

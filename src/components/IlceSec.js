@@ -44,7 +44,7 @@ class IlceSec extends Component {
             visible: false,
             label
         });
-        Actions.Detay();
+        Actions.Detay({ type: 'reset' });
     }
 
 
