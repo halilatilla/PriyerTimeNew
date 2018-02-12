@@ -60,7 +60,7 @@ class Detay extends Component {
                               <TouchableOpacity onPress={this.buttonSehir} style={styles.touchableStyle}>
                                     <Text style={styles.textSecond}> {this.props.sehirisim} </Text>
                               </TouchableOpacity>
-                              
+
                               <TouchableOpacity onPress={this.buttonIlce} style={styles.touchableStyle}>
                                     <Text style={styles.textSecond}> {this.props.ilcead} </Text>
                               </TouchableOpacity>
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
         },
         buttonStyle: {
             marginTop: Platform.OS === 'ios' ? 2 : 20,
-
+            alignItems: 'center',
         }
 }
 );
