@@ -1,26 +1,28 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, Platform, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, Platform, StyleSheet, ImageBackground } from 'react-native';
 import { connect } from 'react-redux';
 import ModalFilterPicker from 'react-native-modal-filter-picker';
 import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
 import { sehirID, sehirIsim } from '../redux/actions/index';
+import sehirsec from '../assets/sehirsec.jpg';
+
 
 class SehirSec extends Component {
     state = {
         visible: false,
         label: '',
-        datail: [],        
+        datail: [],
     };
 
-    componentWillMount = () => { 
-            axios.get(`https://ezanvakti.herokuapp.com/sehirler?ulke=${this.props.ulkeid}`)
+    componentWillMount = () => {
+        axios.get(`https://ezanvakti.herokuapp.com/sehirler?ulke=${this.props.ulkeid}`)
             .then(response => this.setState({ datail: response.data }))
             .catch(error => {
                 console.log(error);
                 throw error;
             });
-        }
+    }
     onCancel = () => {
         this.setState({
             visible: false
@@ -42,32 +44,35 @@ class SehirSec extends Component {
             visible: false,
             label
         });
-        Actions.Ilce();   
+        Actions.Ilce();
         //Ilce();
     }
-  
+
     render() {
         console.log('ŞEHİRSec component');
         const { visible, label } = this.state;
         return (
-            <View style={styles.viewStyle} >
-                <TouchableOpacity onPress={this.onShow}>
-                    <Text style={styles.ilcesecStyle}>Şehir Seçmek İçin Tıklayınız</Text>
-                </TouchableOpacity>
-                <Text style={styles.secilenStyle} >{label}</Text>
-                <ModalFilterPicker
-                    visible={visible}
-                    onSelect={this.onSelect}
-                    onCancel={this.onCancel}
-                    options={this.state.datail.map((item) => (
-                        { label: item.SehirAdi, key: item.SehirID }
-                    ))}
-                />
-            </View>
+            <ImageBackground source={sehirsec} style={{ flex: 1 }} >
 
+                <View style={styles.viewStyle} >
+                    <TouchableOpacity onPress={this.onShow}>
+                        <Text style={styles.ilcesecStyle}>Şehir Seçmek İçin Tıklayınız</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.secilenStyle} >{label}</Text>
+                    <ModalFilterPicker
+                        visible={visible}
+                        onSelect={this.onSelect}
+                        onCancel={this.onCancel}
+                        options={this.state.datail.map((item) => (
+                            { label: item.SehirAdi, key: item.SehirID }
+                        ))}
+                    />
+
+                </View>
+            </ImageBackground>
 
         );
-}
+    }
 }
 
 const styles = StyleSheet.create({

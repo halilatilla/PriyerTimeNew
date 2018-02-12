@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, Platform, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, Platform, StyleSheet, ImageBackground } from 'react-native';
 import { connect } from 'react-redux';
 import ModalFilterPicker from 'react-native-modal-filter-picker';
 import { Actions } from 'react-native-router-flux';
 import axios from 'axios';
 import { ilceID, ilceIsim } from '../redux/actions/index';
+import ilcesec from '../assets/ilcesec.jpg';
 
 
 class IlceSec extends Component {
@@ -42,31 +43,34 @@ class IlceSec extends Component {
         this.setState({
             visible: false,
             label
-        });   
+        });
         Actions.Detay();
     }
-   
+
 
     render() {
-         console.log('İLÇESec component');
+        console.log('İLÇESec component');
         const { visible, label } = this.state;
         return (
-            <View style={styles.viewStyle} >
+            <ImageBackground source={ilcesec} style={{ flex: 1 }} >
 
-                <TouchableOpacity onPress={this.onShow}>
-                    <Text style={styles.ilcesecStyle}>İlçe Seçmek İçin Tıklayınız</Text>
-                </TouchableOpacity>
-                <Text style={styles.secilenStyle} >{label}</Text>
-                <ModalFilterPicker
-                    visible={visible}
-                    onSelect={this.onSelect}
-                    onCancel={this.onCancel}
-                    options={this.state.datailce.map((item) => (
-                        { label: item.IlceAdi, key: item.IlceID } 
-                       ))}
-                />
-            </View>
+                <View style={styles.viewStyle} >
 
+                    <TouchableOpacity onPress={this.onShow}>
+                        <Text style={styles.ilcesecStyle}>İlçe Seçmek İçin Tıklayınız</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.secilenStyle} >{label}</Text>
+                    <ModalFilterPicker
+                        visible={visible}
+                        onSelect={this.onSelect}
+                        onCancel={this.onCancel}
+                        options={this.state.datailce.map((item) => (
+                            { label: item.IlceAdi, key: item.IlceID }
+                        ))}
+                    />
+
+                </View>
+            </ImageBackground>
         );
     }
 }

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, Platform, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, Platform, StyleSheet, ImageBackground } from 'react-native';
 import { connect } from 'react-redux';
 import ModalFilterPicker from 'react-native-modal-filter-picker';
 import { Actions } from 'react-native-router-flux';
 import axios from 'axios';
 import { ulkeID, ulkeIsim } from '../redux/actions/index';
+import ulkesec from '../assets/ulkesec.jpg';
 
 class UlkeSec extends Component {
     state = {
@@ -53,21 +54,24 @@ class UlkeSec extends Component {
 
 
         return (
-            <View style={styles.viewStyle} >
-                <TouchableOpacity onPress={this.onShow}>
-                    <Text>Ülke Seçmek İçin Tıklayınız</Text>
-                </TouchableOpacity>
-                <Text>{label}</Text>
-                <ModalFilterPicker
-                    visible={visible}
-                    onSelect={this.onSelect}
-                    onCancel={this.onCancel}
-                    options={this.state.dataulke.map((item) => (
-                        { label: item.UlkeAdi, key: item.UlkeID }
-                    ))}
-                />
-            </View>
+            <ImageBackground source={ulkesec} style={{ flex: 1 }} >
 
+                <View style={styles.viewStyle} >
+
+                    <TouchableOpacity onPress={this.onShow}>
+                        <Text>Ülke Seçmek İçin Tıklayınız</Text>
+                    </TouchableOpacity>
+                    <Text>{label}</Text>
+                    <ModalFilterPicker
+                        visible={visible}
+                        onSelect={this.onSelect}
+                        onCancel={this.onCancel}
+                        options={this.state.dataulke.map((item) => (
+                            { label: item.UlkeAdi, key: item.UlkeID }
+                        ))}
+                    />
+                </View>
+            </ImageBackground>
         );
     }
 }
