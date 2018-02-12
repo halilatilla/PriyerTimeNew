@@ -48,20 +48,20 @@ class UlkeSec extends Component {
     }
 
     render() {
-        const { visible, label } = this.state;
+        const { visible } = this.state;
 
         console.log('Ulkeseç component');
 
 
-        return (
-            <ImageBackground source={ulkesec} style={{ flex: 1 }} >
-
+        return (<ImageBackground 
+        source={ulkesec} 
+        style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }}
+        >
                 <View style={styles.viewStyle} >
 
-                    <TouchableOpacity onPress={this.onShow}>
-                        <Text>Ülke Seçmek İçin Tıklayınız</Text>
+                    <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle} >
+                        <Text style={styles.textStyle}> Ülke Seçiniz </Text>
                     </TouchableOpacity>
-                    <Text>{label}</Text>
                     <ModalFilterPicker
                         visible={visible}
                         onSelect={this.onSelect}
@@ -80,8 +80,24 @@ const styles = StyleSheet.create({
     viewStyle: {
         marginTop: Platform.OS === 'ios' ? 10 : 0,
         alignItems: 'center',
-        flex: 1
+        flex: 1,
+        justifyContent: 'center',
     },
+    textStyle: {
+        fontSize: 30,
+        padding: 10,
+        fontWeight: 'bold',
+        alignItems: 'center',
+        color: 'black',
+        // backgroundColor: '#e5e4e4',
+        // borderWidth: Platform.OS === 'ios' ? 1 : 0,
+        // borderRadius: 10,
+    },
+    touchableStyle: {
+        backgroundColor: '#e5e4e4',
+        borderWidth: Platform.OS === 'ios' ? 1 : 0,
+        borderRadius: 10,
+    }
 }
 );
 

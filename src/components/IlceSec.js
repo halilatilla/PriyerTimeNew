@@ -50,16 +50,15 @@ class IlceSec extends Component {
 
     render() {
         console.log('İLÇESec component');
-        const { visible, label } = this.state;
+        const { visible } = this.state;
         return (
             <ImageBackground source={ilcesec} style={{ flex: 1 }} >
 
                 <View style={styles.viewStyle} >
 
-                    <TouchableOpacity onPress={this.onShow}>
-                        <Text style={styles.ilcesecStyle}>İlçe Seçmek İçin Tıklayınız</Text>
+                    <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle}>
+                        <Text style={styles.textStyle}>İlçe Seçiniz</Text>
                     </TouchableOpacity>
-                    <Text style={styles.secilenStyle} >{label}</Text>
                     <ModalFilterPicker
                         visible={visible}
                         onSelect={this.onSelect}
@@ -79,16 +78,20 @@ const styles = StyleSheet.create({
     viewStyle: {
         marginTop: Platform.OS === 'ios' ? 10 : 0,
         alignItems: 'center',
+        flex: 1,
+        justifyContent: 'center',
     },
-    ilcesecStyle: {
-        textAlign: 'center',
-        fontSize: Platform.OS === 'ios' ? 10 : 10,
-        padding: 10
-
+    textStyle: {
+        fontSize: 30,
+        padding: 10,
+        fontWeight: 'bold',
+        alignItems: 'center',
+        color: 'black',
     },
-    secilenStyle: {
-        textAlign: 'center',
-        fontSize: Platform.OS === 'ios' ? 10 : 10,
+    touchableStyle: {
+        backgroundColor: '#e5e4e4',
+        borderWidth: Platform.OS === 'ios' ? 1 : 0,
+        borderRadius: 10,
     }
 }
 );

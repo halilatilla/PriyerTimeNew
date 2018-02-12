@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
       Text, View, StyleSheet, Platform, Button,
-      TouchableOpacity, ImageBackground
+      TouchableOpacity, ImageBackground,
 } from 'react-native';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -37,59 +37,62 @@ class Detay extends Component {
                   if (id === 0) {
                         return (<View key={id} style={styles.subcontainerStyle}>
                               <Text style={styles.textStyle}>İmsak    -     {resp.Imsak}</Text>
+                              <View style={{ borderBottomColor: 'grey', borderBottomWidth: 0.6 }} />
                               <Text style={styles.textStyle}>Güneş    -    {resp.Gunes}</Text>
+                              <View style={{ borderBottomColor: 'grey', borderBottomWidth: 0.6 }} />
                               <Text style={styles.textStyle}>Öğle       -    {resp.Ogle}</Text>
+                              <View style={{ borderBottomColor: 'grey', borderBottomWidth: 0.6 }} />
                               <Text style={styles.textStyle}>İkindi     -     {resp.Ikindi}</Text>
+                              <View style={{ borderBottomColor: 'grey', borderBottomWidth: 0.6 }} />
                               <Text style={styles.textStyle}>Akşam   -    {resp.Aksam}</Text>
+                              <View style={{ borderBottomColor: 'grey', borderBottomWidth: 0.6 }} />
                               <Text style={styles.textStyle}>Yatsı      -     {resp.Yatsi}</Text>
                         </View>);
                   }
             }); /* eslint-enaable */
             return (
-                        <ImageBackground source={backgroundImage} style={{ flex: 1 }} >
-                              <View style={styles.viewStyle} >
-                                    <TouchableOpacity onPress={this.buttonUlke}>
-                                          <Text style={styles.textSecond}> {this.props.ulkeisim} </Text>
-                                    </TouchableOpacity>
+                  <ImageBackground source={backgroundImage} style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} >
+                        <View style={styles.viewStyle} >
+                              <TouchableOpacity onPress={this.buttonUlke} style={styles.touchableStyle} >
+                                    <Text style={styles.textSecond}> {this.props.ulkeisim} </Text>
+                              </TouchableOpacity>
 
-                                    <TouchableOpacity onPress={this.buttonSehir}>
-                                          <Text style={styles.textSecond}> {this.props.sehirisim} </Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={this.buttonIlce}>
-                                          <Text style={styles.textSecond}> {this.props.ilcead} </Text>
-                                    </TouchableOpacity>
+                              <TouchableOpacity onPress={this.buttonSehir} style={styles.touchableStyle}>
+                                    <Text style={styles.textSecond}> {this.props.sehirisim} </Text>
+                              </TouchableOpacity>
+                              
+                              <TouchableOpacity onPress={this.buttonIlce} style={styles.touchableStyle}>
+                                    <Text style={styles.textSecond}> {this.props.ilcead} </Text>
+                              </TouchableOpacity>
 
-                              </View>
-                              <View>
-                                    <Button onPress={this.buttonMain} title='Değiştir' />
-                              </View>
+                        </View>
+                        <View style={styles.buttonStyle}>
+                              <Button onPress={this.buttonMain} title='Değiştir' />
+                        </View>
 
-                              <View style={styles.containerStyle}>
-                                    {mapGelenData}
-                              </View>
-                        </ImageBackground>
+                        <View style={styles.containerStyle}>
+                              {mapGelenData}
+                        </View>
+                  </ImageBackground>
             );
       }
 }
 
 const styles = StyleSheet.create({
       containerStyle: {
-            // borderWidth: 1,
-            // borderRadius: 2,
-            // borderColor: '#ddd',
-            // shadowColor: '#000',
-            // shadowOffset: { width: 0, height: 2 },
-            // shadowOpacity: 0.1,
-            // shadowRadius: 2,
+            borderWidth: 1,
+            borderRadius: 10,
+            borderColor: '#9baef2',
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 2,
             elevation: 1,
             marginLeft: 5,
             marginRight: 5,
-            marginTop: Platform.OS === 'ios' ? 50 : 10,
+            marginTop: Platform.OS === 'ios' ? 50 : 40,
             alignItems: 'center',
-            backgroundColor: 'transparent'
-
-
-
+            backgroundColor: '#e5e4e4',
       },
       subContainerStyle: {
             borderBottomWidth: 1,
@@ -98,31 +101,42 @@ const styles = StyleSheet.create({
             justifyContent: 'flex-start',
             flexDirection: 'row',
             position: 'relative',
-            alignItems: 'center',
-
+            alignItems: 'center'
       },
       textStyle: {
             fontSize: 30,
             padding: 10,
             fontWeight: 'bold',
             alignItems: 'center',
-            color: 'black'
-            
+            color: 'black',
+            // textDecorationLine: 'underline',
+            // textDecorationStyle: 'dotted',
+            // textShadowColor: 'red',
+            // lineHeight: 30
       },
       textSecond: {
             fontSize: 20,
             padding: 5,
             fontWeight: 'bold',
             alignItems: 'center',
-            color: 'black'
-
-
+            color: 'black',
       },
       viewStyle: {
             alignItems: 'center',
             marginTop: Platform.OS === 'ios' ? 10 : 1,
             padding: Platform.OS === 'ios' ? 5 : 1,
-      }
+      },
+      touchableStyle: {
+            backgroundColor: '#e5e4e4',
+            borderWidth: Platform.OS === 'ios' ? 1 : 1,
+            borderRadius: 10,
+            margin: 2,
+            borderColor: '#9baef2',
+        },
+        buttonStyle: {
+            marginTop: Platform.OS === 'ios' ? 2 : 20,
+
+        }
 }
 );
 

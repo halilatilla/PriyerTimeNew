@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+//import { ScrollView } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThank from 'redux-thunk';
@@ -12,6 +13,7 @@ export default class App extends Component<{}> {
     return (
       <Provider store={store} >
      <Router />
+
       </Provider>
     );
   }
