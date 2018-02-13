@@ -50,15 +50,29 @@ class Detay extends Component {
                         </View>);
                   }
             }); /* eslint-enaable */
-            return (
-                  <ImageBackground source={backgroundImage} style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} >
+
+            const isimKontrol = (
+                  <View style={styles.viewStyle} >
+                        <TouchableOpacity onPress={this.buttonUlke} style={styles.touchableStyle} >
+                              <Text style={styles.textSecond}> {this.props.ulkeisim} </Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity onPress={this.buttonSehir} style={styles.touchableStyle}>
+                              <Text style={styles.textSecond}> {this.props.sehirisim} </Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity onPress={this.buttonIlce} style={styles.touchableStyle}>
+                              <Text style={styles.textSecond}> {this.props.ilcead} </Text>
+                        </TouchableOpacity>
+
+                  </View>
+            )
+            if (this.props.sehirisim === this.props.ulkeisim) {//şehir ismi ile ulke ismi aynı ise şehir kısmını ekranda gösterme
+
+                  return (<ImageBackground source={backgroundImage} style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} >
                         <View style={styles.viewStyle} >
                               <TouchableOpacity onPress={this.buttonUlke} style={styles.touchableStyle} >
                                     <Text style={styles.textSecond}> {this.props.ulkeisim} </Text>
-                              </TouchableOpacity>
-
-                              <TouchableOpacity onPress={this.buttonSehir} style={styles.touchableStyle}>
-                                    <Text style={styles.textSecond}> {this.props.sehirisim} </Text>
                               </TouchableOpacity>
 
                               <TouchableOpacity onPress={this.buttonIlce} style={styles.touchableStyle}>
@@ -66,6 +80,19 @@ class Detay extends Component {
                               </TouchableOpacity>
 
                         </View>
+                        <View style={styles.buttonStyle}>
+                              <Button onPress={this.buttonMain} title='Değiştir' />
+                        </View>
+
+                        <View style={styles.containerStyle}>
+                              {mapGelenData}
+                        </View>
+                  </ImageBackground>
+                  );
+            };
+            return (
+                  <ImageBackground source={backgroundImage} style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} >
+                        {isimKontrol}
                         <View style={styles.buttonStyle}>
                               <Button onPress={this.buttonMain} title='Değiştir' />
                         </View>
@@ -132,11 +159,11 @@ const styles = StyleSheet.create({
             borderRadius: 10,
             margin: 2,
             borderColor: '#9baef2',
-        },
-        buttonStyle: {
+      },
+      buttonStyle: {
             marginTop: Platform.OS === 'ios' ? 2 : 20,
             alignItems: 'center',
-        }
+      }
 }
 );
 
