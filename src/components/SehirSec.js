@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
 import { sehirID, sehirIsim } from '../redux/actions/index';
 import sehirsec from '../assets/sehirsec.jpg';
+//import IlceSec from './IlceSec';
 
 
 class SehirSec extends Component {
@@ -45,32 +46,76 @@ class SehirSec extends Component {
             label
         });
         Actions.Ilce({ type: 'reset' });
-        //Ilce();
     }
 
     render() {
-        console.log('ŞEHİRSec component');
+        console.log(`ULKE İSİM SEÇİMİ      ${this.props.ulkeisim}`);
         const { visible } = this.state;
-        return (
-            <ImageBackground source={sehirsec} style={{ flex: 1 }} >
 
-                <View style={styles.viewStyle} >
-                    <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle}>
-                        <Text style={styles.textStyle}>Şehir Seçiniz</Text>
-                    </TouchableOpacity>
-                    <ModalFilterPicker
-                        visible={visible}
-                        onSelect={this.onSelect}
-                        onCancel={this.onCancel}
-                        options={this.state.datail.map((item) => (
-                            { label: item.SehirAdi, key: item.SehirID }
-                        ))}
-                    />
+        switch (this.props.ulkeisim) {
+            // case this.props.sehirisim:
+            //     return (
+            //        <SehirSec />
+            //     );
+            case 'ABD':
+                return (<ImageBackground source={sehirsec} style={{ flex: 1 }} >
 
-                </View>
-            </ImageBackground>
+                    <View style={styles.viewStyle} >
+                        <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle}>
+                            <Text style={styles.textStyle}>Eyalet Seçiniz</Text>
+                        </TouchableOpacity>
+                        <ModalFilterPicker
+                            visible={visible}
+                            onSelect={this.onSelect}
+                            onCancel={this.onCancel}
+                            options={this.state.datail.map((item) => (
+                                { label: item.SehirAdi, key: item.SehirID }
+                            ))}
+                        />
 
-        );
+                    </View>
+                </ImageBackground>);
+
+            case 'KANADA':
+                return (<ImageBackground source={sehirsec} style={{ flex: 1 }} >
+
+                    <View style={styles.viewStyle} >
+                        <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle}>
+                            <Text style={styles.textStyle}>Eyalet Seçiniz</Text>
+                        </TouchableOpacity>
+                        <ModalFilterPicker
+                            visible={visible}
+                            onSelect={this.onSelect}
+                            onCancel={this.onCancel}
+                            options={this.state.datail.map((item) => (
+                                { label: item.SehirAdi, key: item.SehirID }
+                            ))}
+                        />
+
+                    </View>
+                </ImageBackground>);
+
+            default:
+                return (
+                    <ImageBackground source={sehirsec} style={{ flex: 1 }} >
+
+                        <View style={styles.viewStyle} >
+                            <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle}>
+                                <Text style={styles.textStyle}>Şehir Seçiniz</Text>
+                            </TouchableOpacity>
+                            <ModalFilterPicker
+                                visible={visible}
+                                onSelect={this.onSelect}
+                                onCancel={this.onCancel}
+                                options={this.state.datail.map((item) => (
+                                    { label: item.SehirAdi, key: item.SehirID }
+                                ))}
+                            />
+                        </View>
+                    </ImageBackground>
+
+                );
+        }
     }
 }
 
@@ -97,9 +142,9 @@ const styles = StyleSheet.create({
 );
 
 const mapStateToProps = ({ dataResponse }) => {
-    const { ulkeid } = dataResponse;
+    const { ulkeid, ulkeisim, sehirisim } = dataResponse;
     return {
-        ulkeid
+        ulkeid, ulkeisim, sehirisim
     };
 };
 

@@ -51,26 +51,94 @@ class IlceSec extends Component {
     render() {
         console.log('İLÇESec component');
         const { visible } = this.state;
-        return (
-            <ImageBackground source={ilcesec} style={{ flex: 1 }} >
 
-                <View style={styles.viewStyle} >
+        switch (this.props.ulkeisim) {
+            case this.props.sehirisim:
+                return (
+                    <ImageBackground source={ilcesec} style={{ flex: 1 }} >
 
-                    <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle}>
-                        <Text style={styles.textStyle}>İlçe Seçiniz</Text>
-                    </TouchableOpacity>
-                    <ModalFilterPicker
-                        visible={visible}
-                        onSelect={this.onSelect}
-                        onCancel={this.onCancel}
-                        options={this.state.datailce.map((item) => (
-                            { label: item.IlceAdi, key: item.IlceID }
-                        ))}
-                    />
+                        <View style={styles.viewStyle} >
 
-                </View>
-            </ImageBackground>
-        );
+                            <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle}>
+                                <Text style={styles.textStyle}>Şehir Seçiniz</Text>
+                            </TouchableOpacity>
+                            <ModalFilterPicker
+                                visible={visible}
+                                onSelect={this.onSelect}
+                                onCancel={this.onCancel}
+                                options={this.state.datailce.map((item) => (
+                                    { label: item.IlceAdi, key: item.IlceID }
+                                ))}
+                            />
+
+                        </View>
+                    </ImageBackground>
+                );
+            case 'ABD':
+                return (
+                    <ImageBackground source={ilcesec} style={{ flex: 1 }} >
+
+                        <View style={styles.viewStyle} >
+
+                            <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle}>
+                                <Text style={styles.textStyle}>Şehir Seçiniz</Text>
+                            </TouchableOpacity>
+                            <ModalFilterPicker
+                                visible={visible}
+                                onSelect={this.onSelect}
+                                onCancel={this.onCancel}
+                                options={this.state.datailce.map((item) => (
+                                    { label: item.IlceAdi, key: item.IlceID }
+                                ))}
+                            />
+
+                        </View>
+                    </ImageBackground>
+                );
+
+            case 'KANADA':
+                return (
+                    <ImageBackground source={ilcesec} style={{ flex: 1 }} >
+
+                        <View style={styles.viewStyle} >
+
+                            <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle}>
+                                <Text style={styles.textStyle}>Şehir Seçiniz</Text>
+                            </TouchableOpacity>
+                            <ModalFilterPicker
+                                visible={visible}
+                                onSelect={this.onSelect}
+                                onCancel={this.onCancel}
+                                options={this.state.datailce.map((item) => (
+                                    { label: item.IlceAdi, key: item.IlceID }
+                                ))}
+                            />
+
+                        </View>
+                    </ImageBackground>
+                );
+            default:
+                return (
+                    <ImageBackground source={ilcesec} style={{ flex: 1 }} >
+
+                        <View style={styles.viewStyle} >
+
+                            <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle}>
+                                <Text style={styles.textStyle}>İlçe Seçiniz</Text>
+                            </TouchableOpacity>
+                            <ModalFilterPicker
+                                visible={visible}
+                                onSelect={this.onSelect}
+                                onCancel={this.onCancel}
+                                options={this.state.datailce.map((item) => (
+                                    { label: item.IlceAdi, key: item.IlceID }
+                                ))}
+                            />
+
+                        </View>
+                    </ImageBackground>
+                );
+        }
     }
 }
 
@@ -97,9 +165,9 @@ const styles = StyleSheet.create({
 );
 
 const mapStateToProps = ({ dataResponse }) => {
-    const { sehirid } = dataResponse;
+    const { sehirid, ulkeisim, sehirisim } = dataResponse;
     return {
-        sehirid
+        sehirid, ulkeisim, sehirisim
     };
 };
 

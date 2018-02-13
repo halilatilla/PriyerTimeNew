@@ -8,6 +8,7 @@ import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
 import { dataChange } from '../redux/actions/index';
 import backgroundImage from '../assets/backgroundimage.jpg';
+//import Spinner from './Spinner';
 
 class Detay extends Component {
       componentWillMount = () => { //vakitler data
@@ -20,19 +21,20 @@ class Detay extends Component {
       }
 
       buttonMain = () => {
-            Actions.Ulke();
+            Actions.Ulke({ type: 'reset' });
       }
       buttonUlke = () => {
-            Actions.Ulke();
+            Actions.Ulke({ type: 'reset' });
       }
       buttonSehir = () => {
-            Actions.Sehir();
+            Actions.Sehir({ type: 'reset' });
       }
       buttonIlce = () => {
-            Actions.Ilce();
+            Actions.Ilce({ type: 'reset' });
       }
 
       render() { /* eslint-disable */
+      
             const mapGelenData = this.props.datavakitler.map((resp, id) => {
                   if (id === 0) {
                         return (<View key={id} style={styles.subcontainerStyle}>
