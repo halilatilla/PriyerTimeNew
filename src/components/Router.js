@@ -13,8 +13,8 @@ const RouterComponent = () => {
             <Scene key="root" >
 
                 <Scene key="Ulke" component={UlkeSec} title="Ulke Seç" initial hideNavBar />
-                <Scene key="Sehir" component={SehirSec} title="Şehir Seç" />
-                <Scene key="Ilce" component={IlceSec} title="İlçe Seç" />
+                <Scene key="Sehir" component={SehirSec} hideNavBar />
+                <Scene key="Ilce" component={IlceSec} hideNavBar />
                 <Scene key="Detay" component={Detay} hideNavBar /> 
                 
             </Scene>

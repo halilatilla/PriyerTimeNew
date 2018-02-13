@@ -8,7 +8,7 @@ import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
 import { dataChange } from '../redux/actions/index';
 import backgroundImage from '../assets/backgroundimage.jpg';
-//import Spinner from './Spinner';
+//import Spinner from './Loading';
 
 class Detay extends Component {
       componentWillMount = () => { //vakitler data
@@ -34,27 +34,32 @@ class Detay extends Component {
       }
 
       render() { /* eslint-disable */
-      
+
             const mapGelenData = this.props.datavakitler.map((resp, id) => {
                   if (id === 0) {
                         return (<View key={id} style={styles.subcontainerStyle}>
+                               <Text style={styles.textStyle}>      {resp.MiladiTarihKisa}</Text>
+                              <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1 }} />
                               <Text style={styles.textStyle}>İmsak    -     {resp.Imsak}</Text>
-                              <View style={{ borderBottomColor: 'grey', borderBottomWidth: 0.6 }} />
+                              <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1 }} />
                               <Text style={styles.textStyle}>Güneş    -    {resp.Gunes}</Text>
-                              <View style={{ borderBottomColor: 'grey', borderBottomWidth: 0.6 }} />
+                              <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1 }} />
                               <Text style={styles.textStyle}>Öğle       -    {resp.Ogle}</Text>
-                              <View style={{ borderBottomColor: 'grey', borderBottomWidth: 0.6 }} />
+                              <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1 }} />
                               <Text style={styles.textStyle}>İkindi     -     {resp.Ikindi}</Text>
-                              <View style={{ borderBottomColor: 'grey', borderBottomWidth: 0.6 }} />
+                              <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1 }} />
                               <Text style={styles.textStyle}>Akşam   -    {resp.Aksam}</Text>
-                              <View style={{ borderBottomColor: 'grey', borderBottomWidth: 0.6 }} />
+                              <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1 }} />
                               <Text style={styles.textStyle}>Yatsı      -     {resp.Yatsi}</Text>
                         </View>);
                   }
             }); /* eslint-enaable */
 
+            //console.log('miladi tarih' + resp.MiladiTarihKisa);
+            
+
             const isimKontrol = (
-                  <View style={styles.viewStyle} >
+                  <View style={styles.touchableviewStyle} >
                         <TouchableOpacity onPress={this.buttonUlke} style={styles.touchableStyle} >
                               <Text style={styles.textSecond}> {this.props.ulkeisim} </Text>
                         </TouchableOpacity>
@@ -72,7 +77,7 @@ class Detay extends Component {
             if (this.props.sehirisim === this.props.ulkeisim) {//şehir ismi ile ulke ismi aynı ise şehir kısmını ekranda gösterme
 
                   return (<ImageBackground source={backgroundImage} style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} >
-                        <View style={styles.viewStyle} >
+                        <View style={styles.touchableviewStyle} >
                               <TouchableOpacity onPress={this.buttonUlke} style={styles.touchableStyle} >
                                     <Text style={styles.textSecond}> {this.props.ulkeisim} </Text>
                               </TouchableOpacity>
@@ -119,7 +124,7 @@ const styles = StyleSheet.create({
             elevation: 1,
             marginLeft: 5,
             marginRight: 5,
-            marginTop: Platform.OS === 'ios' ? 50 : 40,
+            marginTop: Platform.OS === 'ios' ? 40 : 10,
             alignItems: 'center',
             backgroundColor: '#e5e4e4',
       },
@@ -133,7 +138,7 @@ const styles = StyleSheet.create({
             alignItems: 'center'
       },
       textStyle: {
-            fontSize: 30,
+            fontSize: Platform.OS === 'ios' ? 30 : 27,
             padding: 10,
             fontWeight: 'bold',
             alignItems: 'center',
@@ -143,17 +148,26 @@ const styles = StyleSheet.create({
             // textShadowColor: 'red',
             // lineHeight: 30
       },
-      textSecond: {
-            fontSize: 20,
-            padding: 5,
+      tarihText:{
+            fontSize: 30,
+            padding: 10,
             fontWeight: 'bold',
             alignItems: 'center',
             color: 'black',
       },
-      viewStyle: {
+      textSecond: {
+            fontSize: 20,
+            padding: 2,
+            fontWeight: 'bold',
+            alignItems: 'center',
+            color: 'black',
+      },
+      touchableviewStyle: {
             alignItems: 'center',
             marginTop: Platform.OS === 'ios' ? 10 : 1,
             padding: Platform.OS === 'ios' ? 5 : 1,
+            marginTop: Platform.OS === 'ios' ? 10 : 10,
+
       },
       touchableStyle: {
             backgroundColor: '#e5e4e4',
@@ -163,7 +177,7 @@ const styles = StyleSheet.create({
             borderColor: '#9baef2',
       },
       buttonStyle: {
-            marginTop: Platform.OS === 'ios' ? 2 : 20,
+            marginTop: Platform.OS === 'ios' ? 2 : 10,
             alignItems: 'center',
       }
 }

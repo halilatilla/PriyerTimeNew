@@ -58,7 +58,10 @@ class SehirSec extends Component {
             //        <SehirSec />
             //     );
             case 'ABD':
-                return (<ImageBackground source={sehirsec} style={{ flex: 1 }} >
+                return (<ImageBackground 
+                    source={sehirsec} 
+                    style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }}
+                >
 
                     <View style={styles.viewStyle} >
                         <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle}>
@@ -77,7 +80,10 @@ class SehirSec extends Component {
                 </ImageBackground>);
 
             case 'KANADA':
-                return (<ImageBackground source={sehirsec} style={{ flex: 1 }} >
+                return (<ImageBackground 
+                    source={sehirsec} 
+                    style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }}
+                >
 
                     <View style={styles.viewStyle} >
                         <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle}>
@@ -97,7 +103,10 @@ class SehirSec extends Component {
 
             default:
                 return (
-                    <ImageBackground source={sehirsec} style={{ flex: 1 }} >
+                    <ImageBackground 
+                    source={sehirsec} 
+                    style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} 
+                    >
 
                         <View style={styles.viewStyle} >
                             <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle}>

@@ -55,7 +55,10 @@ class IlceSec extends Component {
         switch (this.props.ulkeisim) {
             case this.props.sehirisim:
                 return (
-                    <ImageBackground source={ilcesec} style={{ flex: 1 }} >
+                    <ImageBackground 
+                    source={ilcesec} 
+                    style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} 
+                    >
 
                         <View style={styles.viewStyle} >
 
@@ -76,7 +79,10 @@ class IlceSec extends Component {
                 );
             case 'ABD':
                 return (
-                    <ImageBackground source={ilcesec} style={{ flex: 1 }} >
+                    <ImageBackground 
+                    source={ilcesec} 
+                    style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} 
+                    >
 
                         <View style={styles.viewStyle} >
 
@@ -98,7 +104,10 @@ class IlceSec extends Component {
 
             case 'KANADA':
                 return (
-                    <ImageBackground source={ilcesec} style={{ flex: 1 }} >
+                    <ImageBackground 
+                    source={ilcesec} 
+                    style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} 
+                    >
 
                         <View style={styles.viewStyle} >
 
@@ -119,7 +128,10 @@ class IlceSec extends Component {
                 );
             default:
                 return (
-                    <ImageBackground source={ilcesec} style={{ flex: 1 }} >
+                    <ImageBackground 
+                    source={ilcesec} 
+                    style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} 
+                    >
 
                         <View style={styles.viewStyle} >
 
