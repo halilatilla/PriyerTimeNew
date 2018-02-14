@@ -5,12 +5,13 @@ import ModalFilterPicker from 'react-native-modal-filter-picker';
 import { Actions } from 'react-native-router-flux';
 import axios from 'axios';
 import { ilceID, ilceIsim } from '../redux/actions/index';
+import Spinner from './Spinner';
 
 
 class IlceSec extends Component {
     state = {
         visible: false,
-        datailce: [],
+        datailce: '',
         label: ''
     };
     componentWillMount() {
@@ -27,7 +28,7 @@ class IlceSec extends Component {
         this.setState({
             visible: false
         });
-        Actions.Detay({ type: 'reset' });
+        Actions.Sehir({ type: 'reset' });
     }
 
     onShow = () => {
@@ -52,16 +53,22 @@ class IlceSec extends Component {
     render() {
         console.log('İLÇESec component');
         const { visible } = this.state;
+        if (this.state.datailce === '') {
+            return (
+                <View style={styles.viewStyle} >
+                    <Spinner />
+                </View>);
+        }
         return (
             <View style={styles.viewStyle} >
                 <ModalFilterPicker
-                    placeholder='İlçe Seçiniz' //kendi placeholder yazımı gönderiyorum
+                    placeholder='İlçe Seçiniz' //kendi placeholder yazı gönderildi
                     visible={visible}
                     onSelect={this.onSelect}
                     onCancel={this.onCancel}
                     options={this.state.datailce.map((item) => (
                         // options da değişiklik 
-                        //yaparak key ile birlikte isimde gönderdim
+                        //yaparak key ile birlikte isimde gönderildi
                         { label: item.IlceAdi, key: item.IlceID }
                     ))}
                 />

@@ -6,12 +6,13 @@ import { Actions } from 'react-native-router-flux';
 import axios from 'axios';
 import { ulkeID, ulkeIsim } from '../redux/actions/index';
 import ulkesec from '../assets/ulkesec.jpg';
+import Spinner from './Spinner';
 
 class UlkeSec extends Component {
     state = {
         visible: false,
         label: '',
-        dataulke: []
+        dataulke: ''
     };
 
     componentWillMount() {
@@ -27,7 +28,7 @@ class UlkeSec extends Component {
         this.setState({
             visible: false
         });
-        Actions.Detay({ type: 'reset' });
+        Actions.Ulke({ type: 'reset' });
     }
 
     onShow = () => {
@@ -51,30 +52,38 @@ class UlkeSec extends Component {
     render() {
         const { visible } = this.state;
 
-        console.log('Ulkeseç component');
+        console.log(this.state.dataulke);
 
-
-        return (<ImageBackground
-            source={ulkesec}
-            style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }}
+        if (this.state.dataulke === '') {
+            return (<ImageBackground
+                source={ulkesec}
+                style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }}
+            >
+                <View style={styles.viewStyle} >
+                    <Spinner />
+                </View>
+            </ImageBackground>);
+        } return (<ImageBackground
+                source={ulkesec}
+                style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }}
         >
-            <View style={styles.viewStyle} >
-
-                <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle} >
-                    <Text style={styles.textStyle}> Ülke Seçiniz </Text>
-                </TouchableOpacity>
-                <ModalFilterPicker
-                    placeholder='Ülke Seçiniz'
-                    visible={visible}
-                    onSelect={this.onSelect}
-                    onCancel={this.onCancel}
-                    options={this.state.dataulke.map((item) => (
-                        { label: item.UlkeAdi, key: item.UlkeID }
-                    ))}
-                />
-            </View>
-        </ImageBackground>
-        );
+                <View style={styles.viewStyle} >
+    
+                    <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle} >
+                        <Text style={styles.textStyle}> Konum Seçiniz </Text>
+                    </TouchableOpacity>
+                    <ModalFilterPicker
+                        placeholder='Ülke Seçiniz'
+                        visible={visible}
+                        onSelect={this.onSelect}
+                        onCancel={this.onCancel}
+                        options={this.state.dataulke.map((item) => (
+                            { label: item.UlkeAdi, key: item.UlkeID }
+                        ))}
+                    />
+                </View>
+            </ImageBackground>
+            );    
     }
 }
 

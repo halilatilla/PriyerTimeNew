@@ -8,7 +8,7 @@ import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
 import { dataChange } from '../redux/actions/index';
 import backgroundImage from '../assets/backgroundimage.jpg';
-//import Spinner from './Loading';
+import Spinner from './Spinner';
 
 class Detay extends Component {
       componentWillMount = () => { //vakitler data
@@ -34,6 +34,8 @@ class Detay extends Component {
       }
 
       render() { /* eslint-disable */
+            console.log(this.props.datavakitler);
+            
 
             const mapGelenData = this.props.datavakitler.map((resp, id) => {
                   if (id === 0) {
@@ -75,8 +77,27 @@ class Detay extends Component {
                   </View>
             )
             if (this.props.sehirisim === this.props.ulkeisim) {//şehir ismi ile ulke ismi aynı ise şehir kısmını ekranda gösterme
+                        if (this.props.datavakitler === 0) {// gelen ilceid boş ise spinner dönecek
+                            return <ImageBackground source={backgroundImage} style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} >
+                        <View style={styles.touchableviewStyle} >
+                              <TouchableOpacity onPress={this.buttonUlke} style={styles.touchableStyle} >
+                                    <Text style={styles.textSecond}> {this.props.ulkeisim} </Text>
+                              </TouchableOpacity>
 
-                  return (<ImageBackground source={backgroundImage} style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} >
+                              <TouchableOpacity onPress={this.buttonIlce} style={styles.touchableStyle}>
+                                    <Text style={styles.textSecond}> {this.props.ilcead} </Text>
+                              </TouchableOpacity>
+
+                        </View>
+                        <View style={styles.buttonStyle}>
+                              <Button onPress={this.buttonMain} title='Değiştir' />
+                        </View>
+
+                        <View style={styles.containerStyle}>
+                              <Spinner />
+                        </View>
+                  </ImageBackground>
+                        } return (<ImageBackground source={backgroundImage} style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} >
                         <View style={styles.touchableviewStyle} >
                               <TouchableOpacity onPress={this.buttonUlke} style={styles.touchableStyle} >
                                     <Text style={styles.textSecond}> {this.props.ulkeisim} </Text>

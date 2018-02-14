@@ -5,12 +5,14 @@ import ModalFilterPicker from 'react-native-modal-filter-picker';
 import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
 import { sehirID, sehirIsim } from '../redux/actions/index';
+import Spinner from './Spinner';
+
 
 class SehirSec extends Component {
     state = {
         visible: false,
         label: '',
-        datail: [],
+        datail: '',
     };
 
     componentWillMount = () => {
@@ -27,6 +29,7 @@ class SehirSec extends Component {
         this.setState({
             visible: false
         });
+        Actions.Ulke({ type: 'reset' });
     }
 
     onShow = () => {
@@ -50,7 +53,12 @@ class SehirSec extends Component {
     render() {
         console.log(`ULKE İSİM SEÇİMİ      ${this.props.ulkeisim}`);
         const { visible } = this.state;
-
+        if (this.state.datail === '') {
+            return (
+                <View style={styles.viewStyle} >
+                    <Spinner />
+                </View>);
+        }
         return (
             <View style={styles.viewStyle} >
                 {/* <TouchableOpacity onPress={this.onShow} 
