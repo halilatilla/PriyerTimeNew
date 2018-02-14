@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, Platform, StyleSheet, ImageBackground } from 'react-native';
+import { View, Platform, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import ModalFilterPicker from 'react-native-modal-filter-picker';
 import { Actions } from 'react-native-router-flux';
 import axios from 'axios';
 import { ilceID, ilceIsim } from '../redux/actions/index';
-import ilcesec from '../assets/ilcesec.jpg';
 
 
 class IlceSec extends Component {
@@ -21,12 +20,14 @@ class IlceSec extends Component {
                 console.log(error);
                 throw error;
             });
+        this.state.visible = true;
     }
 
     onCancel = () => {
         this.setState({
             visible: false
         });
+        Actions.Detay({ type: 'reset' });
     }
 
     onShow = () => {
@@ -51,106 +52,22 @@ class IlceSec extends Component {
     render() {
         console.log('İLÇESec component');
         const { visible } = this.state;
+        return (
+            <View style={styles.viewStyle} >
+                <ModalFilterPicker
+                    placeholder='İlçe Seçiniz' //kendi placeholder yazımı gönderiyorum
+                    visible={visible}
+                    onSelect={this.onSelect}
+                    onCancel={this.onCancel}
+                    options={this.state.datailce.map((item) => (
+                        // options da değişiklik 
+                        //yaparak key ile birlikte isimde gönderdim
+                        { label: item.IlceAdi, key: item.IlceID }
+                    ))}
+                />
 
-        switch (this.props.ulkeisim) {
-            case this.props.sehirisim:
-                return (
-                    <ImageBackground 
-                    source={ilcesec} 
-                    style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} 
-                    >
-
-                        <View style={styles.viewStyle} >
-
-                            <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle}>
-                                <Text style={styles.textStyle}>Şehir Seçiniz</Text>
-                            </TouchableOpacity>
-                            <ModalFilterPicker
-                                visible={visible}
-                                onSelect={this.onSelect}
-                                onCancel={this.onCancel}
-                                options={this.state.datailce.map((item) => (
-                                    { label: item.IlceAdi, key: item.IlceID }
-                                ))}
-                            />
-
-                        </View>
-                    </ImageBackground>
-                );
-            case 'ABD':
-                return (
-                    <ImageBackground 
-                    source={ilcesec} 
-                    style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} 
-                    >
-
-                        <View style={styles.viewStyle} >
-
-                            <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle}>
-                                <Text style={styles.textStyle}>Şehir Seçiniz</Text>
-                            </TouchableOpacity>
-                            <ModalFilterPicker
-                                visible={visible}
-                                onSelect={this.onSelect}
-                                onCancel={this.onCancel}
-                                options={this.state.datailce.map((item) => (
-                                    { label: item.IlceAdi, key: item.IlceID }
-                                ))}
-                            />
-
-                        </View>
-                    </ImageBackground>
-                );
-
-            case 'KANADA':
-                return (
-                    <ImageBackground 
-                    source={ilcesec} 
-                    style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} 
-                    >
-
-                        <View style={styles.viewStyle} >
-
-                            <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle}>
-                                <Text style={styles.textStyle}>Şehir Seçiniz</Text>
-                            </TouchableOpacity>
-                            <ModalFilterPicker
-                                visible={visible}
-                                onSelect={this.onSelect}
-                                onCancel={this.onCancel}
-                                options={this.state.datailce.map((item) => (
-                                    { label: item.IlceAdi, key: item.IlceID }
-                                ))}
-                            />
-
-                        </View>
-                    </ImageBackground>
-                );
-            default:
-                return (
-                    <ImageBackground 
-                    source={ilcesec} 
-                    style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} 
-                    >
-
-                        <View style={styles.viewStyle} >
-
-                            <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle}>
-                                <Text style={styles.textStyle}>İlçe Seçiniz</Text>
-                            </TouchableOpacity>
-                            <ModalFilterPicker
-                                visible={visible}
-                                onSelect={this.onSelect}
-                                onCancel={this.onCancel}
-                                options={this.state.datailce.map((item) => (
-                                    { label: item.IlceAdi, key: item.IlceID }
-                                ))}
-                            />
-
-                        </View>
-                    </ImageBackground>
-                );
-        }
+            </View>
+        );
     }
 }
 

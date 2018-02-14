@@ -27,6 +27,7 @@ class UlkeSec extends Component {
         this.setState({
             visible: false
         });
+        Actions.Detay({ type: 'reset' });
     }
 
     onShow = () => {
@@ -53,25 +54,26 @@ class UlkeSec extends Component {
         console.log('Ulkeseç component');
 
 
-        return (<ImageBackground 
-        source={ulkesec} 
-        style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }}
+        return (<ImageBackground
+            source={ulkesec}
+            style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }}
         >
-                <View style={styles.viewStyle} >
+            <View style={styles.viewStyle} >
 
-                    <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle} >
-                        <Text style={styles.textStyle}> Ülke Seçiniz </Text>
-                    </TouchableOpacity>
-                    <ModalFilterPicker
-                        visible={visible}
-                        onSelect={this.onSelect}
-                        onCancel={this.onCancel}
-                        options={this.state.dataulke.map((item) => (
-                            { label: item.UlkeAdi, key: item.UlkeID }
-                        ))}
-                    />
-                </View>
-            </ImageBackground>
+                <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle} >
+                    <Text style={styles.textStyle}> Ülke Seçiniz </Text>
+                </TouchableOpacity>
+                <ModalFilterPicker
+                    placeholder='Ülke Seçiniz'
+                    visible={visible}
+                    onSelect={this.onSelect}
+                    onCancel={this.onCancel}
+                    options={this.state.dataulke.map((item) => (
+                        { label: item.UlkeAdi, key: item.UlkeID }
+                    ))}
+                />
+            </View>
+        </ImageBackground>
         );
     }
 }
