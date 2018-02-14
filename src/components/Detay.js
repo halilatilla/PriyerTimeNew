@@ -8,9 +8,13 @@ import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
 import { dataChange } from '../redux/actions/index';
 import backgroundImage from '../assets/backgroundimage.jpg';
-//import Spinner from './Spinner';
+import Spinner from './Spinner';
+
 
 class Detay extends Component {
+      state = {
+            loading: true,
+      };
       componentWillMount = () => { //vakitler data
             axios.get(`https://ezanvakti.herokuapp.com/vakitler?ilce=${this.props.ilceid}`)
                   .then(response => this.props.dataChange({ datavakitler: response.data }))
@@ -34,13 +38,11 @@ class Detay extends Component {
       }
 
       render() { /* eslint-disable */
-            console.log(this.props.datavakitler);
-            
 
             const mapGelenData = this.props.datavakitler.map((resp, id) => {
                   if (id === 0) {
                         return (<View key={id} style={styles.subcontainerStyle}>
-                               <Text style={styles.textStyle}>      {resp.MiladiTarihKisa}</Text>
+                              <Text style={styles.textStyle}>      {resp.MiladiTarihKisa}</Text>
                               <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1 }} />
                               <Text style={styles.textStyle}>İmsak    -     {resp.Imsak}</Text>
                               <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1 }} />
@@ -55,10 +57,9 @@ class Detay extends Component {
                               <Text style={styles.textStyle}>Yatsı      -     {resp.Yatsi}</Text>
                         </View>);
                   }
-            }); /* eslint-enaable */
-
-            //console.log('miladi tarih' + resp.MiladiTarihKisa);
-            
+                  this.state.loading = false;
+            });
+            /* eslint-enable */
 
             const isimKontrol = (
                   <View style={styles.touchableviewStyle} >
@@ -75,36 +76,55 @@ class Detay extends Component {
                         </TouchableOpacity>
 
                   </View>
-            )
-            if (this.props.sehirisim === this.props.ulkeisim) {//şehir ismi ile ulke ismi aynı ise şehir kısmını ekranda gösterme
-                  //       if (this.props.datavakitler === 0) {// gelen ilceid boş ise spinner dönecek
-                  //           return <ImageBackground source={backgroundImage} style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} >
-                  //       <View style={styles.touchableviewStyle} >
-                  //             <TouchableOpacity onPress={this.buttonUlke} style={styles.touchableStyle} >
-                  //                   <Text style={styles.textSecond}> {this.props.ulkeisim} </Text>
-                  //             </TouchableOpacity>
+            );
+            if (this.props.sehirisim === this.props.ulkeisim) { 
+                  //ülke ismi ile şehir ismi aynı ise şehir ismini gösterme
+                  if (this.state.loading) { 
+                        // mapGelen datası dolmadı ise Spinner göster
+                        return (<ImageBackground
+                              source={backgroundImage}
+                              style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }}
+                        >
+                              <View style={styles.touchableviewStyle} >
+                                    <TouchableOpacity
+                                          onPress={this.buttonUlke}
+                                          style={styles.touchableStyle}
+                                    >
+                                          <Text style={styles.textSecond}>
+                                                {this.props.ulkeisim} </Text>
+                                    </TouchableOpacity>
 
-                  //             <TouchableOpacity onPress={this.buttonIlce} style={styles.touchableStyle}>
-                  //                   <Text style={styles.textSecond}> {this.props.ilcead} </Text>
-                  //             </TouchableOpacity>
+                                    <TouchableOpacity
+                                          onPress={this.buttonIlce} style={styles.touchableStyle}
+                                    >
+                                          <Text style={styles.textSecond}>
+                                                {this.props.ilcead} </Text>
+                                    </TouchableOpacity>
 
-                  //       </View>
-                  //       <View style={styles.buttonStyle}>
-                  //             <Button onPress={this.buttonMain} title='Değiştir' />
-                  //       </View>
+                              </View>
+                              <View style={styles.buttonStyle}>
+                                    <Button onPress={this.buttonMain} title='Değiştir' />
+                              </View>
 
-                  //       <View style={styles.containerStyle}>
-                  //             <Spinner />
-                  //       </View>
-                  // </ImageBackground>
-                  //       }
-                   return (<ImageBackground source={backgroundImage} style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} >
+                              <View style={styles.containerStyle}>
+                                    <Spinner />
+                              </View>
+                        </ImageBackground>
+                        );
+                  } return (<ImageBackground
+                        source={backgroundImage}
+                        style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }}
+                  >
                         <View style={styles.touchableviewStyle} >
-                              <TouchableOpacity onPress={this.buttonUlke} style={styles.touchableStyle} >
+                              <TouchableOpacity
+                                    onPress={this.buttonUlke} style={styles.touchableStyle}
+                              >
                                     <Text style={styles.textSecond}> {this.props.ulkeisim} </Text>
                               </TouchableOpacity>
 
-                              <TouchableOpacity onPress={this.buttonIlce} style={styles.touchableStyle}>
+                              <TouchableOpacity
+                                    onPress={this.buttonIlce} style={styles.touchableStyle}
+                              >
                                     <Text style={styles.textSecond}> {this.props.ilcead} </Text>
                               </TouchableOpacity>
 
@@ -118,19 +138,40 @@ class Detay extends Component {
                         </View>
                   </ImageBackground>
                   );
-            };
-            return (
-                  <ImageBackground source={backgroundImage} style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} >
-                        {isimKontrol}
-                        <View style={styles.buttonStyle}>
-                              <Button onPress={this.buttonMain} title='Değiştir' />
-                        </View>
+            } else if (this.props.sehirisim !== this.props.ulkeisim) {
+                  if (this.state.loading) {
+                        return (
+                              <ImageBackground
+                                    source={backgroundImage}
+                                    style={{ flex: 1, 
+                                          marginTop: Platform.OS === 'ios' ? 21 : null }}
+                              >
+                                    {isimKontrol}
+                                    <View style={styles.buttonStyle}>
+                                          <Button onPress={this.buttonMain} title='Değiştir' />
+                                    </View>
 
-                        <View style={styles.containerStyle}>
-                              {mapGelenData}
-                        </View>
-                  </ImageBackground>
-            );
+                                    <View style={styles.containerStyle}>
+                                          <Spinner />
+                                    </View>
+                              </ImageBackground>
+                        );
+                  } return (
+                        <ImageBackground
+                              source={backgroundImage}
+                              style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }}
+                        >
+                              {isimKontrol}
+                              <View style={styles.buttonStyle}>
+                                    <Button onPress={this.buttonMain} title='Değiştir' />
+                              </View>
+
+                              <View style={styles.containerStyle}>
+                                    {mapGelenData}
+                              </View>
+                        </ImageBackground>
+                  );
+            }
       }
 }
 
@@ -170,7 +211,7 @@ const styles = StyleSheet.create({
             // textShadowColor: 'red',
             // lineHeight: 30
       },
-      tarihText:{
+      tarihText: {
             fontSize: 30,
             padding: 10,
             fontWeight: 'bold',
@@ -186,7 +227,6 @@ const styles = StyleSheet.create({
       },
       touchableviewStyle: {
             alignItems: 'center',
-            marginTop: Platform.OS === 'ios' ? 10 : 1,
             padding: Platform.OS === 'ios' ? 5 : 1,
             marginTop: Platform.OS === 'ios' ? 10 : 10,
 

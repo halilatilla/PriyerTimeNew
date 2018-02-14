@@ -1,11 +1,11 @@
 const INITIAL_STATE = {
     datavakitler: [],
-    ilceid: '',
-    ilcead: '',
-    sehirid: '',
-    sehirisim: '',
-    ulkeid: '',
-    ulkeisim: ''
+    ilceid: '9540',
+    ilcead: 'ESENYURT',
+    sehirid: '539',
+    sehirisim: 'İSTANBUL',
+    ulkeid: '2',
+    ulkeisim: 'TÜRKİYE'
 };
 
 export default (state = INITIAL_STATE, action) => {

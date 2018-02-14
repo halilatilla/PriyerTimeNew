@@ -13,10 +13,11 @@ const RouterComponent = () => {
             <Lightbox>
             <Scene key="root" >
 
+                 <Scene key="Detay" component={Detay} hideNavBar /> 
                 <Scene key="Ulke" component={UlkeSec} hideNavBar />
                 <Scene key="Sehir" component={SehirSec} hideNavBar />
                 <Scene key="Ilce" component={IlceSec} hideNavBar />
-                <Scene key="Detay" component={Detay} hideNavBar /> 
+
                 
             </Scene>
             </Lightbox>
