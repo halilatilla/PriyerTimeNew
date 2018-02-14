@@ -8,7 +8,7 @@ import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
 import { dataChange } from '../redux/actions/index';
 import backgroundImage from '../assets/backgroundimage.jpg';
-import Spinner from './Spinner';
+//import Spinner from './Spinner';
 
 class Detay extends Component {
       componentWillMount = () => { //vakitler data
@@ -77,27 +77,28 @@ class Detay extends Component {
                   </View>
             )
             if (this.props.sehirisim === this.props.ulkeisim) {//şehir ismi ile ulke ismi aynı ise şehir kısmını ekranda gösterme
-                        if (this.props.datavakitler === 0) {// gelen ilceid boş ise spinner dönecek
-                            return <ImageBackground source={backgroundImage} style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} >
-                        <View style={styles.touchableviewStyle} >
-                              <TouchableOpacity onPress={this.buttonUlke} style={styles.touchableStyle} >
-                                    <Text style={styles.textSecond}> {this.props.ulkeisim} </Text>
-                              </TouchableOpacity>
+                  //       if (this.props.datavakitler === 0) {// gelen ilceid boş ise spinner dönecek
+                  //           return <ImageBackground source={backgroundImage} style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} >
+                  //       <View style={styles.touchableviewStyle} >
+                  //             <TouchableOpacity onPress={this.buttonUlke} style={styles.touchableStyle} >
+                  //                   <Text style={styles.textSecond}> {this.props.ulkeisim} </Text>
+                  //             </TouchableOpacity>
 
-                              <TouchableOpacity onPress={this.buttonIlce} style={styles.touchableStyle}>
-                                    <Text style={styles.textSecond}> {this.props.ilcead} </Text>
-                              </TouchableOpacity>
+                  //             <TouchableOpacity onPress={this.buttonIlce} style={styles.touchableStyle}>
+                  //                   <Text style={styles.textSecond}> {this.props.ilcead} </Text>
+                  //             </TouchableOpacity>
 
-                        </View>
-                        <View style={styles.buttonStyle}>
-                              <Button onPress={this.buttonMain} title='Değiştir' />
-                        </View>
+                  //       </View>
+                  //       <View style={styles.buttonStyle}>
+                  //             <Button onPress={this.buttonMain} title='Değiştir' />
+                  //       </View>
 
-                        <View style={styles.containerStyle}>
-                              <Spinner />
-                        </View>
-                  </ImageBackground>
-                        } return (<ImageBackground source={backgroundImage} style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} >
+                  //       <View style={styles.containerStyle}>
+                  //             <Spinner />
+                  //       </View>
+                  // </ImageBackground>
+                  //       }
+                   return (<ImageBackground source={backgroundImage} style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }} >
                         <View style={styles.touchableviewStyle} >
                               <TouchableOpacity onPress={this.buttonUlke} style={styles.touchableStyle} >
                                     <Text style={styles.textSecond}> {this.props.ulkeisim} </Text>

@@ -51,7 +51,7 @@ class SehirSec extends Component {
     }
 
     render() {
-        console.log(`ULKE İSİM SEÇİMİ      ${this.props.ulkeisim}`);
+        console.log(this.state.datail);
         const { visible } = this.state;
         if (this.state.datail === '') {
             return (
