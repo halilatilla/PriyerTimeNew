@@ -42,19 +42,19 @@ class Detay extends Component {
             const mapGelenData = this.props.datavakitler.map((resp, id) => {
                   if (id === 0) {
                         return (<View key={id} style={styles.subcontainerStyle}>
-                              <Text style={styles.textStyle}>      {resp.MiladiTarihKisa}</Text>
+                              <Text style={styles.vakitlerTextStyle}>      {resp.MiladiTarihKisa}</Text>
                               <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1 }} />
-                              <Text style={styles.textStyle}>İmsak    -     {resp.Imsak}</Text>
+                              <Text style={styles.vakitlerTextStyle}>İmsak    -     {resp.Imsak}</Text>
                               <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1 }} />
-                              <Text style={styles.textStyle}>Güneş    -    {resp.Gunes}</Text>
+                              <Text style={styles.vakitlerTextStyle}>Güneş    -    {resp.Gunes}</Text>
                               <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1 }} />
-                              <Text style={styles.textStyle}>Öğle       -    {resp.Ogle}</Text>
+                              <Text style={styles.vakitlerTextStyle}>Öğle       -    {resp.Ogle}</Text>
                               <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1 }} />
-                              <Text style={styles.textStyle}>İkindi     -     {resp.Ikindi}</Text>
+                              <Text style={styles.vakitlerTextStyle}>İkindi     -     {resp.Ikindi}</Text>
                               <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1 }} />
-                              <Text style={styles.textStyle}>Akşam   -    {resp.Aksam}</Text>
+                              <Text style={styles.vakitlerTextStyle}>Akşam   -    {resp.Aksam}</Text>
                               <View style={{ borderBottomColor: 'grey', borderBottomWidth: 1 }} />
-                              <Text style={styles.textStyle}>Yatsı      -     {resp.Yatsi}</Text>
+                              <Text style={styles.vakitlerTextStyle}>Yatsı      -     {resp.Yatsi}</Text>
                         </View>);
                   }
                   this.state.loading = false;
@@ -64,15 +64,15 @@ class Detay extends Component {
             const isimKontrol = (
                   <View style={styles.touchableviewStyle} >
                         <TouchableOpacity onPress={this.buttonUlke} style={styles.touchableStyle} >
-                              <Text style={styles.textSecond}> {this.props.ulkeisim} </Text>
+                              <Text style={styles.textToubleIn}> {this.props.ulkeisim} </Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={this.buttonSehir} style={styles.touchableStyle}>
-                              <Text style={styles.textSecond}> {this.props.sehirisim} </Text>
+                              <Text style={styles.textToubleIn}> {this.props.sehirisim} </Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={this.buttonIlce} style={styles.touchableStyle}>
-                              <Text style={styles.textSecond}> {this.props.ilcead} </Text>
+                              <Text style={styles.textToubleIn}> {this.props.ilcead} </Text>
                         </TouchableOpacity>
 
                   </View>
@@ -185,31 +185,34 @@ const styles = StyleSheet.create({
             shadowOpacity: 0.1,
             shadowRadius: 2,
             elevation: 1,
-            marginLeft: 5,
-            marginRight: 5,
-            marginTop: Platform.OS === 'ios' ? 40 : 10,
+            marginLeft: 30,
+            marginRight: 30,
+            marginTop: Platform.OS === 'ios' ? 20 : 10,
             alignItems: 'center',
             backgroundColor: '#e5e4e4',
+            flex: 1,
+            marginBottom: Platform.OS === 'ios' ? 20 : 10,
+
       },
       subContainerStyle: {
             borderBottomWidth: 1,
             padding: 5,
             backgroundColor: '#fff',
-            justifyContent: 'flex-start',
+            justifyContent: 'center',
             flexDirection: 'row',
-            position: 'relative',
-            alignItems: 'center'
+            alignItems: 'center',
+            flex: 1,
+            marginBottom: Platform.OS === 'ios' ? 4 : 1,
+
+
       },
-      textStyle: {
+      vakitlerTextStyle: {
             fontSize: Platform.OS === 'ios' ? 30 : 27,
             padding: 10,
             fontWeight: 'bold',
             alignItems: 'center',
             color: 'black',
-            // textDecorationLine: 'underline',
-            // textDecorationStyle: 'dotted',
-            // textShadowColor: 'red',
-            // lineHeight: 30
+            flex: 1
       },
       tarihText: {
             fontSize: 30,
@@ -218,7 +221,7 @@ const styles = StyleSheet.create({
             alignItems: 'center',
             color: 'black',
       },
-      textSecond: {
+      textToubleIn: {
             fontSize: 20,
             padding: 2,
             fontWeight: 'bold',
