@@ -46,74 +46,74 @@ class Detay extends Component {
                               </View>
 
                               <View style={styles.vakitlerViewStyle}>
-                                    <View style={styles.vakitView}> 
-                                    <Text style={styles.vakitYazi}>İmsak</Text> 
+                                    <View style={styles.vakitView}>
+                                          <Text style={styles.vakitYazi}>İmsak</Text>
                                     </View>
-                                    <View style={styles.noktaView}> 
-                                    <Text style={styles.vakitNokta}>:</Text> 
+                                    <View style={styles.noktaView}>
+                                          <Text style={styles.vakitNokta}>:</Text>
                                     </View>
-                                    <View style={styles.tarihView}> 
-                                    <Text style={styles.vakitTarih}>{resp.Imsak}</Text> 
-                                    </View>
-                              </View>
-
-                               <View style={styles.vakitlerViewStyle}>
-                                    <View style={styles.vakitView}> 
-                                    <Text style={styles.vakitYazi}>Güneş</Text> 
-                                    </View>
-                                    <View style={styles.noktaView}> 
-                                    <Text style={styles.vakitNokta}>:</Text> 
-                                    </View>
-                                    <View style={styles.tarihView}> 
-                                    <Text style={styles.vakitTarih}>{resp.Gunes}</Text> 
+                                    <View style={styles.tarihView}>
+                                          <Text style={styles.vakitTarih}>{resp.Imsak}</Text>
                                     </View>
                               </View>
 
                               <View style={styles.vakitlerViewStyle}>
-                                    <View style={styles.vakitView}> 
-                                    <Text style={styles.vakitYazi}>Öğle</Text> 
+                                    <View style={styles.vakitView}>
+                                          <Text style={styles.vakitYazi}>Güneş</Text>
                                     </View>
-                                    <View style={styles.noktaView}> 
-                                    <Text style={styles.vakitNokta}>:</Text> 
+                                    <View style={styles.noktaView}>
+                                          <Text style={styles.vakitNokta}>:</Text>
                                     </View>
-                                    <View style={styles.tarihView}> 
-                                    <Text style={styles.vakitTarih}>{resp.Ogle}</Text> 
-                                    </View>
-                              </View>
-
-                               <View style={styles.vakitlerViewStyle}>
-                                    <View style={styles.vakitView}> 
-                                    <Text style={styles.vakitYazi}>İkindi</Text> 
-                                    </View>
-                                    <View style={styles.noktaView}> 
-                                    <Text style={styles.vakitNokta}>:</Text> 
-                                    </View>
-                                    <View style={styles.tarihView}> 
-                                    <Text style={styles.vakitTarih}>{resp.Ikindi}</Text> 
+                                    <View style={styles.tarihView}>
+                                          <Text style={styles.vakitTarih}>{resp.Gunes}</Text>
                                     </View>
                               </View>
 
-                               <View style={styles.vakitlerViewStyle}>
-                                    <View style={styles.vakitView}> 
-                                    <Text style={styles.vakitYazi}>Akşam</Text> 
+                              <View style={styles.vakitlerViewStyle}>
+                                    <View style={styles.vakitView}>
+                                          <Text style={styles.vakitYazi}>Öğle</Text>
                                     </View>
-                                    <View style={styles.noktaView}> 
-                                    <Text style={styles.vakitNokta}>:</Text> 
+                                    <View style={styles.noktaView}>
+                                          <Text style={styles.vakitNokta}>:</Text>
                                     </View>
-                                    <View style={styles.tarihView}> 
-                                    <Text style={styles.vakitTarih}>{resp.Aksam}</Text> 
+                                    <View style={styles.tarihView}>
+                                          <Text style={styles.vakitTarih}>{resp.Ogle}</Text>
                                     </View>
                               </View>
 
-                               <View style={styles.vakitlerViewStyle}>
-                                    <View style={styles.vakitView}> 
-                                    <Text style={styles.vakitYazi}>Yatsı</Text> 
+                              <View style={styles.vakitlerViewStyle}>
+                                    <View style={styles.vakitView}>
+                                          <Text style={styles.vakitYazi}>İkindi</Text>
                                     </View>
-                                    <View style={styles.noktaView}> 
-                                    <Text style={styles.vakitNokta}>:</Text> 
+                                    <View style={styles.noktaView}>
+                                          <Text style={styles.vakitNokta}>:</Text>
                                     </View>
-                                    <View style={styles.tarihView}> 
-                                    <Text style={styles.vakitTarih}>{resp.Yatsi}</Text> 
+                                    <View style={styles.tarihView}>
+                                          <Text style={styles.vakitTarih}>{resp.Ikindi}</Text>
+                                    </View>
+                              </View>
+
+                              <View style={styles.vakitlerViewStyle}>
+                                    <View style={styles.vakitView}>
+                                          <Text style={styles.vakitYazi}>Akşam</Text>
+                                    </View>
+                                    <View style={styles.noktaView}>
+                                          <Text style={styles.vakitNokta}>:</Text>
+                                    </View>
+                                    <View style={styles.tarihView}>
+                                          <Text style={styles.vakitTarih}>{resp.Aksam}</Text>
+                                    </View>
+                              </View>
+
+                              <View style={styles.vakitlerViewStyle}>
+                                    <View style={styles.vakitView}>
+                                          <Text style={styles.vakitYazi}>Yatsı</Text>
+                                    </View>
+                                    <View style={styles.noktaView}>
+                                          <Text style={styles.vakitNokta}>:</Text>
+                                    </View>
+                                    <View style={styles.tarihView}>
+                                          <Text style={styles.vakitTarih}>{resp.Yatsi}</Text>
                                     </View>
                               </View>
 
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
             marginRight: '5%',
             marginTop: '2%',
             marginBottom: '2%',
-            borderRadius: 10,
+            borderRadius: 5,
             // shadowColor: 'blue',
             // shadowOpacity: 0.4,
             // shadowOffset: { width: 0, height: 2 },
@@ -276,11 +276,11 @@ const styles = StyleSheet.create({
       noktaView: {
             //backgroundColor: 'green'
             justifyContent: 'center',
-            
+
 
       },
       tarihView: {
-           // backgroundColor: 'red',
+            // backgroundColor: 'red',
             alignItems: 'center',
             justifyContent: 'center',
             flex: 1
@@ -308,7 +308,6 @@ const styles = StyleSheet.create({
             fontSize: Platform.OS === 'ios' ? 25 : 25,
             alignItems: 'center',
             justifyContent: 'flex-start',
-            //paddingRight: Platform.OS === 'ios' ? '10%' : '5%'
 
 
       },
@@ -325,6 +324,8 @@ const styles = StyleSheet.create({
             fontWeight: 'bold',
             alignItems: 'center',
             color: 'black',
+            fontFamily: Platform.OS === 'ios' ? 'Helvetica' : 'notoserif',
+
       },
       touchableviewStyle: {
             alignItems: 'center',
@@ -336,12 +337,14 @@ const styles = StyleSheet.create({
       },
       touchableStyle: {
             backgroundColor: 'rgba(166, 201, 242, 0.6)',
-            borderRadius: 10,
+            borderRadius: 5,
             margin: 3,
+            padding: 3,
             shadowColor: 'blue',
             shadowOpacity: 0.4,
             shadowOffset: { width: 0, height: 2 },
             shadowRadius: 3,
+
       },
       buttonStyle: {
             margin: Platform.OS === 'ios' ? '2%' : '3%',
@@ -349,9 +352,7 @@ const styles = StyleSheet.create({
             marginRight: '15%',
             alignItems: 'center',
             backgroundColor: Platform.OS === 'ios' ? 'rgba(166, 201, 242, 0.6)' : null,
-            //borderWidth: Platform.OS === 'ios' ? 1 : null,
-            //borderColor: '#9baef2',
-            borderRadius: 10,
+            borderRadius: 5,
             shadowColor: 'blue',
             shadowOpacity: 0.4,
             shadowOffset: { width: 0, height: 2 },
