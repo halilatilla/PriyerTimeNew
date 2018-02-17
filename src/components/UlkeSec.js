@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text, Platform, StyleSheet, ImageBackground } from 'react-native';
+import { View, Platform, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import ModalFilterPicker from 'react-native-modal-filter-picker';
 import { Actions } from 'react-native-router-flux';
 import axios from 'axios';
 import { ulkeID, ulkeIsim } from '../redux/actions/index';
-import ulkesec from '../assets/ulkesec.jpg';
-import Spinner from './Spinner';
 
 class UlkeSec extends Component {
     state = {
         visible: false,
         label: '',
-        dataulke: ''
+        dataulke: []
     };
 
     componentWillMount() {
@@ -22,6 +20,7 @@ class UlkeSec extends Component {
                 console.log(error);
                 throw error;
             });
+            this.state.visible = true;
     }
 
     onCancel = () => {
@@ -54,24 +53,7 @@ class UlkeSec extends Component {
 
         console.log(this.state.dataulke);
 
-        if (this.state.dataulke === '') {
-            return (<ImageBackground
-                source={ulkesec}
-                style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }}
-            >
-                <View style={styles.viewStyle} >
-                    <Spinner />
-                </View>
-            </ImageBackground>);
-        } return (<ImageBackground
-                source={ulkesec}
-                style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }}
-        >
-                <View style={styles.viewStyle} >
-    
-                    <TouchableOpacity onPress={this.onShow} style={styles.touchableStyle} >
-                        <Text style={styles.textStyle}> Konum Seçiniz </Text>
-                    </TouchableOpacity>
+       return (<View style={styles.viewStyle} >
                     <ModalFilterPicker
                         placeholder='Ülke Seçiniz'
                         visible={visible}
@@ -82,7 +64,6 @@ class UlkeSec extends Component {
                         ))}
                     />
                 </View>
-            </ImageBackground>
             );    
     }
 }
@@ -93,21 +74,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
         justifyContent: 'center',
-    },
-    textStyle: {
-        fontSize: 30,
-        padding: 10,
-        fontWeight: 'bold',
-        alignItems: 'center',
-        color: 'black',
-        // backgroundColor: '#e5e4e4',
-        // borderWidth: Platform.OS === 'ios' ? 1 : 0,
-        // borderRadius: 10,
-    },
-    touchableStyle: {
-        backgroundColor: '#e5e4e4',
-        borderWidth: Platform.OS === 'ios' ? 1 : 0,
-        borderRadius: 10,
     }
 }
 );

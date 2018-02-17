@@ -8,6 +8,8 @@ const INITIAL_STATE = {
     ulkeisim: 'TÜRKİYE'
 };
 
+//9540 , ESENYURT, 539 , İSTANBUL, 2, TÜRKİYE
+
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case 'data_changed':

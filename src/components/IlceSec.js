@@ -46,12 +46,13 @@ class IlceSec extends Component {
             visible: false,
             label
         });
-        Actions.Detay({ type: 'reset' });
+        Actions.Detay({ type: 'reset' });// react-native-router-flux sayesinde 
+        //tıklandığında Detay componentine aktarıyor
     }
 
 
     render() {
-        console.log('İLÇESec component');
+        console.log(this.state.datailce);
         const { visible } = this.state;
         if (this.state.datailce === '') {
             return (
@@ -84,18 +85,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
         justifyContent: 'center',
-    },
-    textStyle: {
-        fontSize: 30,
-        padding: 10,
-        fontWeight: 'bold',
-        alignItems: 'center',
-        color: 'black',
-    },
-    touchableStyle: {
-        backgroundColor: '#e5e4e4',
-        borderWidth: Platform.OS === 'ios' ? 1 : 0,
-        borderRadius: 10,
     }
 }
 );

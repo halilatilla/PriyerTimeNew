@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import {
       Text, View, StyleSheet, Platform, Button,
-      TouchableOpacity, ImageBackground,
+      TouchableOpacity, ImageBackground, AsyncStorage
 } from 'react-native';
 import { connect } from 'react-redux';
 import axios from 'axios';
+//import Storage from 'react-native-storage';
 import { Actions } from 'react-native-router-flux';
 import { dataChange } from '../redux/actions/index';
 import backgroundImage from '../assets/backgroundimage.jpg';
@@ -12,17 +13,82 @@ import Spinner from './Spinner';
 
 
 class Detay extends Component {
-      state = {
-            loading: true,
-      };
-      componentWillMount = () => { //vakitler data
-            axios.get(`https://ezanvakti.herokuapp.com/vakitler?ilce=${this.props.ilceid}`)
+      constructor() {
+            super();
+            this.state = {
+                  loading: true,
+                  sonulkeisim: '',
+                  sonsehirisim: '',
+                  sonilceisim: '',
+                  sonilceid: '',
+                  localdatavakitler: []
+            };
+            console.log('Detay constructor');
+            console.log(this.state.localdatavakitler);    
+            //console.log(this.propsd.datavakitler);         
+      }
+
+
+      componentWillMount = async () => { //vakitler data
+            await this.sonData();
+            if (this.props.sonilceid === '' || this.props.sonilceid === '9540') {
+                  axios.get(`https://ezanvakti.herokuapp.com/vakitler?ilce=${this.props.ilceid}`)
                   .then(response => this.props.dataChange({ datavakitler: response.data }))
                   .catch(error => {
                         console.log(error);
                         throw error;
                   });
-      }
+                  console.log('Detay İf içinde');
+            } else {
+                  axios.get(`https://ezanvakti.herokuapp.com/vakitler?ilce=${this.state.sonilceid}`)
+                  .then(response => this.props.dataChange({ datavakitler: response.data }))
+                  .catch(error => {
+                        console.log(error);
+                        throw error;
+                  });      
+                  console.log('Detay ComponentWillMount Else');
+                  console.log(this.state.sonilceid);       
+            }
+            
+            console.log('Detay componentWillMount');
+      };
+
+        componentDidMount = () => {
+              console.log(' Detay componentDidMount');
+              
+              if (this.props.ulkeisim !== 'TÜRKİYE' || this.props.sehirisim !== 'İSTANBUL' 
+              || this.props.ilcead !== 'ESENYURT' || this.props.ilceid !== '9540') {
+                  const sondatatüm = {
+                        ulke: this.props.ulkeisim,
+                        sehir: this.props.sehirisim,
+                        ilce: this.props.ilcead,
+                        ilceidgonder: this.props.ilceid,
+                         datalocal: this.props.datavakitler
+                  };
+      
+                  AsyncStorage.setItem('sonulkeisim', JSON.stringify(sondatatüm));
+                  console.log(' Local Data Kayıt Yeri');
+                  console.log(sondatatüm); 
+              }
+              console.log(this.props.datavakitler);        
+     };
+      sonData = async () => {
+                  try {
+                        const ulke = await AsyncStorage.getItem('sonulkeisim');
+                        const parsed = JSON.parse(ulke);
+                        console.log(parsed);
+                        console.log(parsed.datalocal);
+                        console.log('data alınıyor');
+                        this.setState({ sonulkeisim: parsed.ulke });
+                        this.setState({ sonsehirisim: parsed.sehir });
+                        this.setState({ sonilceisim: parsed.ilce });
+                        this.setState({ sonilceid: parsed.ilceidgonder });
+                        this.setState({ localdatavakitler: parsed.datalocal });
+                  } catch (error) {
+                        console.log(error);
+                  }
+                  console.log('SonData içinde');                 
+            }
 
       buttonMain = () => {
             Actions.Ulke({ type: 'reset' });
@@ -36,6 +102,7 @@ class Detay extends Component {
       buttonIlce = () => {
             Actions.Ilce({ type: 'reset' });
       }
+
       /* eslint-disable */ /* eslint-enable */
       render() {
             const mapGelenData = this.props.datavakitler.map((resp, id) => {// eslint-disable-line
@@ -362,10 +429,40 @@ const styles = StyleSheet.create({
 }
 );
 
-
 const mapStateToProps = ({ dataResponse }) => {
       const { datavakitler, ilceid, ulkeisim, ilcead, sehirisim } = dataResponse;
       return { datavakitler, ilceid, ulkeisim, ilcead, sehirisim };
 };
 
 export default connect(mapStateToProps, { dataChange })(Detay);
+
+
+      // componentDidMount = () => {
+      //       const sondatatüm = {
+      //             ulke: this.props.ulkeisim,
+      //             sehir: this.props.sehirisim,
+      //             ilce: this.props.ilcead,
+      //             ilceidgonder: this.props.ilceid
+      //       };
+
+      //       AsyncStorage.setItem('sonulkeisim', JSON.stringify(sondatatüm));
+      //       console.log(sondatatüm);
+      //       console.log('data gönderiliyor');
+
+      //       this.sonData();
+      // };
+      // sonData = async () => {
+      //       try {
+      //             const ulke = await AsyncStorage.getItem('sonulkeisim');
+      //             const parsed = JSON.parse(ulke);
+      //             console.log(parsed);
+      //             console.log('data alınıyor');
+      //             this.state.sonulkeisim = parsed.ulke;
+      //             this.state.sonsehirisim = parsed.sehir;
+      //             this.state.sonilceisim = parsed.ilce;
+      //             this.state.sonilceid = parsed.ilceidgonder;
+      //       } catch (error) {
+      //             console.log(error);
+      //       }
+      // }
+

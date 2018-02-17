@@ -23,7 +23,7 @@ class SehirSec extends Component {
                 throw error;
             }
             );
-        this.state.visible = true;
+        this.state.visible = true; // bu sayfaya girildiğinde Modalfilter görünmesi için
     }
     onCancel = () => {
         this.setState({
@@ -86,18 +86,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
         justifyContent: 'center',
-    },
-    textStyle: {
-        fontSize: 30,
-        padding: 10,
-        fontWeight: 'bold',
-        alignItems: 'center',
-        color: 'black',
-    },
-    touchableStyle: {
-        backgroundColor: '#e5e4e4',
-        borderWidth: Platform.OS === 'ios' ? 1 : 0,
-        borderRadius: 10,
     }
 }
 );
