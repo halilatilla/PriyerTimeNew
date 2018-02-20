@@ -4,10 +4,9 @@ import {
       TouchableOpacity, ImageBackground, AsyncStorage
 } from 'react-native';
 import { connect } from 'react-redux';
-import axios from 'axios';
-//import Storage from 'react-native-storage';
 import { Actions } from 'react-native-router-flux';
-import { dataChange } from '../redux/actions/index';
+import { ilceIsim, sehirIsim, ulkeIsim, ulkeID, sehirID, ilceID, dataChange }
+      from '../redux/actions/index';
 import backgroundImage from '../assets/backgroundimage.jpg';
 import Spinner from './Spinner';
 
@@ -17,78 +16,60 @@ class Detay extends Component {
             super();
             this.state = {
                   loading: true,
-                  sonulkeisim: '',
-                  sonsehirisim: '',
-                  sonilceisim: '',
-                  sonilceid: '',
-                  localdatavakitler: []
+                  localvakitler: [],
+                  localulkeisim: '',
+                  localsehirisim: '',
+                  localilceisim: '',
             };
-            console.log('Detay constructor');
-            console.log(this.state.localdatavakitler);    
-            //console.log(this.propsd.datavakitler);         
+            console.log('Constructor');
+           //this.localKayitOku();
+      }
+/*
+      componentWillMount() {
+            this.localKayitYap();
       }
 
+      localKayitOku = async () => {
+            console.log('Son Data içinde');
 
-      componentWillMount = async () => { //vakitler data
-            await this.sonData();
-            if (this.props.sonilceid === '' || this.props.sonilceid === '9540') {
-                  axios.get(`https://ezanvakti.herokuapp.com/vakitler?ilce=${this.props.ilceid}`)
-                  .then(response => this.props.dataChange({ datavakitler: response.data }))
-                  .catch(error => {
-                        console.log(error);
-                        throw error;
+            try {
+                  const ulke = await AsyncStorage.getItem('sonulkeisim');
+                  const parsed = JSON.parse(ulke);
+                  console.log(parsed);
+                  console.log('Son data Try içinde');
+
+                  this.setState({
+                        localvakitler: parsed.vakitlocal,
+                        localulkeisim: parsed.ulke,
+                        localsehirisim: parsed.sehir,
+                        localilceisim: parsed.ilce,
                   });
-                  console.log('Detay İf içinde');
-            } else {
-                  axios.get(`https://ezanvakti.herokuapp.com/vakitler?ilce=${this.state.sonilceid}`)
-                  .then(response => this.props.dataChange({ datavakitler: response.data }))
-                  .catch(error => {
-                        console.log(error);
-                        throw error;
-                  });      
-                  console.log('Detay ComponentWillMount Else');
-                  console.log(this.state.sonilceid);       
+                  this.props.ulkeID({ localulkeid: parsed.ulkeidlocal });
+                  this.props.sehirID({ localsehirid: parsed.sehiridlocal });
+                  this.props.ilceID({ localilceid: parsed.ilceidlocal });
+            } catch (error) {
+                  console.log(error);
             }
-            
-            console.log('Detay componentWillMount');
-      };
+      }
 
-        componentDidMount = () => {
-              console.log(' Detay componentDidMount');
-              
-              if (this.props.ulkeisim !== 'TÜRKİYE' || this.props.sehirisim !== 'İSTANBUL' 
-              || this.props.ilcead !== 'ESENYURT' || this.props.ilceid !== '9540') {
+      localKayitYap = () => {
+            if ((this.props.ilcead !== '')) {
                   const sondatatüm = {
                         ulke: this.props.ulkeisim,
                         sehir: this.props.sehirisim,
                         ilce: this.props.ilcead,
-                        ilceidgonder: this.props.ilceid,
-                         datalocal: this.props.datavakitler
+                        vakitlocal: this.props.datavakitler,
+                        ulkeidlocal: this.props.ulkeid,
+                        sehiridlocal: this.props.sehirid,
+                        ilceidlocal: this.props.ilceid
                   };
-      
+
                   AsyncStorage.setItem('sonulkeisim', JSON.stringify(sondatatüm));
-                  console.log(' Local Data Kayıt Yeri');
-                  console.log(sondatatüm); 
-              }
-              console.log(this.props.datavakitler);        
-     };
-      sonData = async () => {
-                  try {
-                        const ulke = await AsyncStorage.getItem('sonulkeisim');
-                        const parsed = JSON.parse(ulke);
-                        console.log(parsed);
-                        console.log(parsed.datalocal);
-                        console.log('data alınıyor');
-                        this.setState({ sonulkeisim: parsed.ulke });
-                        this.setState({ sonsehirisim: parsed.sehir });
-                        this.setState({ sonilceisim: parsed.ilce });
-                        this.setState({ sonilceid: parsed.ilceidgonder });
-                        this.setState({ localdatavakitler: parsed.datalocal });
-                  } catch (error) {
-                        console.log(error);
-                  }
-                  console.log('SonData içinde');                 
+                  console.log(sondatatüm);
+                  console.log('ComponentDidMount İf içinde data gönderiliyor');
             }
+      }; */
+
 
       buttonMain = () => {
             Actions.Ulke({ type: 'reset' });
@@ -105,6 +86,8 @@ class Detay extends Component {
 
       /* eslint-disable */ /* eslint-enable */
       render() {
+            console.log('Render');
+
             const mapGelenData = this.props.datavakitler.map((resp, id) => {// eslint-disable-line
                   if (id === 0) {
                         return (<View key={id} style={styles.containerStyle}>
@@ -231,7 +214,10 @@ class Detay extends Component {
 
                               </View>
                               <View style={styles.buttonStyle}>
-                                    <Button onPress={this.buttonMain} title='Değiştir' />
+                                    <Button
+                                          style={{ flex: 1 }}
+                                          onPress={this.buttonMain} title='KONUM SEÇ'
+                                    />
                               </View>
 
                               <View style={styles.containerStyle}>
@@ -247,18 +233,23 @@ class Detay extends Component {
                               <TouchableOpacity
                                     onPress={this.buttonUlke} style={styles.touchableStyle}
                               >
-                                    <Text style={styles.textToubleIn}> {this.props.ulkeisim} </Text>
+                                    <Text style={styles.textToubleIn}>
+                                          {this.props.ulkeisim} </Text>
                               </TouchableOpacity>
 
                               <TouchableOpacity
                                     onPress={this.buttonIlce} style={styles.touchableStyle}
                               >
-                                    <Text style={styles.textToubleIn}> {this.props.ilcead} </Text>
+                                    <Text style={styles.textToubleIn}>
+                                          {this.props.ilceisim} </Text>
                               </TouchableOpacity>
 
                         </View>
                         <View style={styles.buttonStyle}>
-                              <Button onPress={this.buttonMain} title='Değiştir' />
+                              <Button
+                                    style={{ flex: 1 }}
+                                    onPress={this.buttonMain} title='KONUM SEÇ'
+                              />
                         </View>
 
                         <View style={styles.containerStyle}>
@@ -278,7 +269,10 @@ class Detay extends Component {
                               >
                                     {isimKontrol}
                                     <View style={styles.buttonStyle}>
-                                          <Button onPress={this.buttonMain} title='Değiştir' />
+                                          <Button
+                                                style={{ flex: 1 }}
+                                                onPress={this.buttonMain} title='KONUM SEÇ'
+                                          />
                                     </View>
 
                                     <View style={styles.containerStyle}>
@@ -293,7 +287,10 @@ class Detay extends Component {
                         >
                               {isimKontrol}
                               <View style={styles.buttonStyle}>
-                                    <Button onPress={this.buttonMain} title='Değiştir' />
+                                    <Button
+                                          style={{ flex: 1 }}
+                                          onPress={this.buttonMain} title='KONUM SEÇ'
+                                    />
                               </View>
 
                               {mapGelenData}
@@ -326,10 +323,6 @@ const styles = StyleSheet.create({
             marginTop: '2%',
             marginBottom: '2%',
             borderRadius: 5,
-            // shadowColor: 'blue',
-            // shadowOpacity: 0.4,
-            // shadowOffset: { width: 0, height: 2 },
-            // shadowRadius: 3,
 
       },
       vakitView: {
@@ -375,8 +368,6 @@ const styles = StyleSheet.create({
             fontSize: Platform.OS === 'ios' ? 25 : 25,
             alignItems: 'center',
             justifyContent: 'flex-start',
-
-
       },
       tarihText: {
             fontSize: 25,
@@ -407,62 +398,30 @@ const styles = StyleSheet.create({
             borderRadius: 5,
             margin: 3,
             padding: 3,
-            shadowColor: 'blue',
-            shadowOpacity: 0.4,
-            shadowOffset: { width: 0, height: 2 },
-            shadowRadius: 3,
+            // shadowColor: 'blue',
+            // shadowOpacity: 0.4,
+            // shadowOffset: { width: 0, height: 2 },
+            // shadowRadius: 3,
 
       },
       buttonStyle: {
             margin: Platform.OS === 'ios' ? '2%' : '3%',
-            marginLeft: '15%',
-            marginRight: '15%',
+            marginLeft: '30%',
+            marginRight: '30%',
             alignItems: 'center',
             backgroundColor: Platform.OS === 'ios' ? 'rgba(166, 201, 242, 0.6)' : null,
             borderRadius: 5,
-            shadowColor: 'blue',
-            shadowOpacity: 0.4,
-            shadowOffset: { width: 0, height: 2 },
-            shadowRadius: 3,
-
+            // shadowColor: 'blue',
+            // shadowOpacity: 0.4,
+            // shadowOffset: { width: 0, height: 2 },
+            // shadowRadius: 3,
       }
 }
 );
 
 const mapStateToProps = ({ dataResponse }) => {
-      const { datavakitler, ilceid, ulkeisim, ilcead, sehirisim } = dataResponse;
-      return { datavakitler, ilceid, ulkeisim, ilcead, sehirisim };
+      const { datavakitler, ulkeisim, ilcead, sehirisim, ulkeid, sehirid, ilceid } = dataResponse;
+      return { datavakitler, ulkeisim, ilcead, sehirisim, ulkeid, sehirid, ilceid };
 };
 
-export default connect(mapStateToProps, { dataChange })(Detay);
-
-
-      // componentDidMount = () => {
-      //       const sondatatüm = {
-      //             ulke: this.props.ulkeisim,
-      //             sehir: this.props.sehirisim,
-      //             ilce: this.props.ilcead,
-      //             ilceidgonder: this.props.ilceid
-      //       };
-
-      //       AsyncStorage.setItem('sonulkeisim', JSON.stringify(sondatatüm));
-      //       console.log(sondatatüm);
-      //       console.log('data gönderiliyor');
-
-      //       this.sonData();
-      // };
-      // sonData = async () => {
-      //       try {
-      //             const ulke = await AsyncStorage.getItem('sonulkeisim');
-      //             const parsed = JSON.parse(ulke);
-      //             console.log(parsed);
-      //             console.log('data alınıyor');
-      //             this.state.sonulkeisim = parsed.ulke;
-      //             this.state.sonsehirisim = parsed.sehir;
-      //             this.state.sonilceisim = parsed.ilce;
-      //             this.state.sonilceid = parsed.ilceidgonder;
-      //       } catch (error) {
-      //             console.log(error);
-      //       }
-      // }
-
+export default connect(mapStateToProps, { ilceIsim, sehirIsim, ulkeIsim, ulkeID, sehirID, ilceID, dataChange  })(Detay); // eslint-disable-line

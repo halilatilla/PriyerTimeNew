@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ModalFilterPicker from 'react-native-modal-filter-picker';
 import { Actions } from 'react-native-router-flux';
 import axios from 'axios';
-import { ilceID, ilceIsim } from '../redux/actions/index';
+import { ilceID, ilceIsim, dataChange } from '../redux/actions/index';
 import Spinner from './Spinner';
 
 
@@ -14,15 +14,16 @@ class IlceSec extends Component {
         datailce: '',
         label: ''
     };
-    componentWillMount() {
-        axios.get(`https://ezanvakti.herokuapp.com/ilceler?sehir=${this.props.sehirid}`)
+    componentWillMount = () => { 
+      axios.get(`https://ezanvakti.herokuapp.com/ilceler?sehir=${this.props.sehirid}`)
             .then(response => this.setState({ datailce: response.data }))
             .catch(error => {
                 console.log(error);
                 throw error;
-            });
-        this.state.visible = true;
+            });     
+            this.state.visible = true;     
     }
+
 
     onCancel = () => {
         this.setState({
@@ -35,10 +36,7 @@ class IlceSec extends Component {
         this.setState({ visible: true });
     }
 
-    onSelect = (picked, label) => {
-        this.props.ilceID({
-            ilceid: picked
-        });
+    onSelect = async (picked, label) => {
         this.props.ilceIsim({
             ilcead: label
         });
@@ -46,10 +44,22 @@ class IlceSec extends Component {
             visible: false,
             label
         });
+       await this.props.ilceID({
+            ilceid: picked
+        });
+        
         Actions.Detay({ type: 'reset' });// react-native-router-flux sayesinde 
         //tıklandığında Detay componentine aktarıyor
+        this.component();
     }
-
+    component() {
+        axios.get(`https://ezanvakti.herokuapp.com/vakitler?ilce=${this.props.ilceid}`)
+        .then(response => this.props.dataChange({ datavakitler: response.data }))
+        .catch(error => {
+              console.log(error);
+              throw error;
+        });  
+    }
 
     render() {
         console.log(this.state.datailce);
@@ -90,10 +100,10 @@ const styles = StyleSheet.create({
 );
 
 const mapStateToProps = ({ dataResponse }) => {
-    const { sehirid, ulkeisim, sehirisim } = dataResponse;
+    const { sehirid, ulkeisim, sehirisim, ilceid } = dataResponse;
     return {
-        sehirid, ulkeisim, sehirisim
+        sehirid, ulkeisim, sehirisim, ilceid
     };
 };
 
-export default connect(mapStateToProps, { ilceID, ilceIsim })(IlceSec);
+export default connect(mapStateToProps, { ilceID, ilceIsim, dataChange })(IlceSec);

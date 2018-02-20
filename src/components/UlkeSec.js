@@ -27,7 +27,7 @@ class UlkeSec extends Component {
         this.setState({
             visible: false
         });
-        Actions.Ulke({ type: 'reset' });
+        Actions.Detay({ type: 'reset' });
     }
 
     onShow = () => {

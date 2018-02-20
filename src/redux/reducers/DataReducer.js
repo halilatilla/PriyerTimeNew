@@ -1,11 +1,11 @@
 const INITIAL_STATE = {
     datavakitler: [],
-    ilceid: '9540',
-    ilcead: 'ESENYURT',
-    sehirid: '539',
-    sehirisim: 'İSTANBUL',
-    ulkeid: '2',
-    ulkeisim: 'TÜRKİYE'
+    ilceid: '',
+    ilcead: '',
+    sehirid: '',
+    sehirisim: '',
+    ulkeid: '',
+    ulkeisim: ''
 };
 
 //9540 , ESENYURT, 539 , İSTANBUL, 2, TÜRKİYE
