@@ -105,9 +105,9 @@ const styles = StyleSheet.create({
 );
 
 const mapStateToProps = ({ dataResponse }) => {
-    const { ulkeid } = dataResponse;
+    const { ulkeid, ulkeisim } = dataResponse;
     return {
-        ulkeid 
+        ulkeid, ulkeisim
     };
 };
 

@@ -21,9 +21,9 @@ class IlceSec extends Component {
                 console.log(error);
                 throw error;
             });     
-            this.state.visible = true;     
+            this.state.visible = true;                    
     }
-
+     
 
     onCancel = () => {
         this.setState({
@@ -81,6 +81,7 @@ class IlceSec extends Component {
   }
     
     render() {
+        console.log(this.props.sehirisim);
         console.log(this.state.datailce);
         const { visible } = this.state;
         if (this.state.datailce === '') {
@@ -119,9 +120,9 @@ const styles = StyleSheet.create({
 );
 
 const mapStateToProps = ({ dataResponse }) => {
-    const { sehirid, ilceid } = dataResponse;
+    const { sehirid, ilceid, sehirisim } = dataResponse;
     return {
-        sehirid, ilceid
+        sehirid, ilceid, sehirisim
     };
 };
 
