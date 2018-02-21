@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, Platform, StyleSheet } from 'react-native';
+import { View, Platform, StyleSheet, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import ModalFilterPicker from 'react-native-modal-filter-picker';
 import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
-import { sehirID, sehirIsim } from '../redux/actions/index';
+import { sehirID, sehirIsim, ulkeIsim } from '../redux/actions/index';
 import Spinner from './Spinner';
 
 
@@ -36,7 +36,7 @@ class SehirSec extends Component {
         this.setState({ visible: true });
     }
 
-    onSelect = (picked, label) => {
+    onSelect = async (picked, label) => {
         this.props.sehirID({
             sehirid: picked,
         });
@@ -47,8 +47,22 @@ class SehirSec extends Component {
             visible: false,
             label
         });
+        await this.componentD();
         Actions.Ilce({ type: 'reset' });
     }
+
+    componentD = async () => { //eslint-disable-line
+        console.log('Son Data içinde');
+        if (this.props.ulkeisim === '') {
+            try {
+                const localdata = await AsyncStorage.getItem('localdata');
+                const parsed = JSON.parse(localdata);
+                 this.props.ulkeIsim({ ulkeisim: parsed.ulke });
+          } catch (error) {
+                console.log(error);
+          }
+        }           
+  }
 
     render() {
         console.log(this.state.datail);
@@ -91,10 +105,10 @@ const styles = StyleSheet.create({
 );
 
 const mapStateToProps = ({ dataResponse }) => {
-    const { ulkeid, ulkeisim, sehirisim } = dataResponse;
+    const { ulkeid } = dataResponse;
     return {
-        ulkeid, ulkeisim, sehirisim
+        ulkeid 
     };
 };
 
-export default connect(mapStateToProps, { sehirID, sehirIsim })(SehirSec);
+export default connect(mapStateToProps, { sehirID, sehirIsim, ulkeIsim })(SehirSec);

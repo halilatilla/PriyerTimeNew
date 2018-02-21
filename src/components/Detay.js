@@ -22,37 +22,10 @@ class Detay extends Component {
                   localilceisim: '',
             };
             console.log('Constructor');
-           //this.localKayitOku();
       }
-/*
+
+
       componentWillMount() {
-            this.localKayitYap();
-      }
-
-      localKayitOku = async () => {
-            console.log('Son Data içinde');
-
-            try {
-                  const ulke = await AsyncStorage.getItem('sonulkeisim');
-                  const parsed = JSON.parse(ulke);
-                  console.log(parsed);
-                  console.log('Son data Try içinde');
-
-                  this.setState({
-                        localvakitler: parsed.vakitlocal,
-                        localulkeisim: parsed.ulke,
-                        localsehirisim: parsed.sehir,
-                        localilceisim: parsed.ilce,
-                  });
-                  this.props.ulkeID({ localulkeid: parsed.ulkeidlocal });
-                  this.props.sehirID({ localsehirid: parsed.sehiridlocal });
-                  this.props.ilceID({ localilceid: parsed.ilceidlocal });
-            } catch (error) {
-                  console.log(error);
-            }
-      }
-
-      localKayitYap = () => {
             if ((this.props.ilcead !== '')) {
                   const sondatatüm = {
                         ulke: this.props.ulkeisim,
@@ -64,12 +37,35 @@ class Detay extends Component {
                         ilceidlocal: this.props.ilceid
                   };
 
-                  AsyncStorage.setItem('sonulkeisim', JSON.stringify(sondatatüm));
+                  AsyncStorage.setItem('localdata', JSON.stringify(sondatatüm));
                   console.log(sondatatüm);
                   console.log('ComponentDidMount İf içinde data gönderiliyor');
             }
-      }; */
+      }
 
+      componentDidMount = async () => {
+            console.log('Son Data içinde');
+                  try {
+                        const localdata = await AsyncStorage.getItem('localdata');
+                        const parsed = JSON.parse(localdata);
+                        console.log(parsed);
+                        console.log('Son data Try içinde');
+
+                        this.setState({
+                              localvakitler: parsed.vakitlocal,
+                              localulkeisim: parsed.ulke,
+                              localsehirisim: parsed.sehir,
+                              localilceisim: parsed.ilce,
+                        });
+
+                        //  this.props.dataChange({ datavakitler: parsed.vakitlocal });
+                         this.props.ulkeID({ ulkeid: parsed.ulkeidlocal });
+                         this.props.sehirID({ sehirid: parsed.sehiridlocal });
+                         this.props.ilceID({ ilceid: parsed.ilceidlocal });
+                  } catch (error) {
+                        console.log(error);
+                  }
+      }
 
       buttonMain = () => {
             Actions.Ulke({ type: 'reset' });
@@ -88,7 +84,7 @@ class Detay extends Component {
       render() {
             console.log('Render');
 
-            const mapGelenData = this.props.datavakitler.map((resp, id) => {// eslint-disable-line
+            const mapGelenData = this.state.localvakitler.map((resp, id) => {// eslint-disable-line
                   if (id === 0) {
                         return (<View key={id} style={styles.containerStyle}>
                               <View style={styles.vakitlerViewStyle} >
@@ -175,20 +171,20 @@ class Detay extends Component {
             const isimKontrol = (
                   <View style={styles.touchableviewStyle} >
                         <TouchableOpacity onPress={this.buttonUlke} style={styles.touchableStyle} >
-                              <Text style={styles.textToubleIn}> {this.props.ulkeisim} </Text>
+                              <Text style={styles.textToubleIn}> {this.state.localulkeisim} </Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={this.buttonSehir} style={styles.touchableStyle}>
-                              <Text style={styles.textToubleIn}> {this.props.sehirisim} </Text>
+                              <Text style={styles.textToubleIn}> {this.state.localsehirisim} </Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={this.buttonIlce} style={styles.touchableStyle}>
-                              <Text style={styles.textToubleIn}> {this.props.ilcead} </Text>
+                              <Text style={styles.textToubleIn}> {this.state.localilceisim} </Text>
                         </TouchableOpacity>
 
                   </View>
             );
-            if (this.props.sehirisim === this.props.ulkeisim) {
+            if (this.state.localsehirisim === this.state.localulkeisim) {
                   //ülke ismi ile şehir ismi aynı ise şehir ismini gösterme
                   if (this.state.loading) {
                         // mapGelen datası dolmadı ise Spinner göster
@@ -202,14 +198,14 @@ class Detay extends Component {
                                           style={styles.touchableStyle}
                                     >
                                           <Text style={styles.textToubleIn}>
-                                                {this.props.ulkeisim} </Text>
+                                                {this.state.localulkeisim} </Text>
                                     </TouchableOpacity>
 
                                     <TouchableOpacity
                                           onPress={this.buttonIlce} style={styles.touchableStyle}
                                     >
                                           <Text style={styles.textToubleIn}>
-                                                {this.props.ilcead} </Text>
+                                                {this.state.localilceisim} </Text>
                                     </TouchableOpacity>
 
                               </View>
@@ -234,14 +230,14 @@ class Detay extends Component {
                                     onPress={this.buttonUlke} style={styles.touchableStyle}
                               >
                                     <Text style={styles.textToubleIn}>
-                                          {this.props.ulkeisim} </Text>
+                                          {this.state.localulkeisim} </Text>
                               </TouchableOpacity>
 
                               <TouchableOpacity
                                     onPress={this.buttonIlce} style={styles.touchableStyle}
                               >
                                     <Text style={styles.textToubleIn}>
-                                          {this.props.ilceisim} </Text>
+                                          {this.state.localilceisim} </Text>
                               </TouchableOpacity>
 
                         </View>
@@ -257,7 +253,7 @@ class Detay extends Component {
                         </View>
                   </ImageBackground>
                   );
-            } else if (this.props.sehirisim !== this.props.ulkeisim) {
+            } else if (this.state.localsehirisim !== this.state.localulkeisim) {
                   if (this.state.loading) {
                         return (
                               <ImageBackground
@@ -424,4 +420,4 @@ const mapStateToProps = ({ dataResponse }) => {
       return { datavakitler, ulkeisim, ilcead, sehirisim, ulkeid, sehirid, ilceid };
 };
 
-export default connect(mapStateToProps, { ilceIsim, sehirIsim, ulkeIsim, ulkeID, sehirID, ilceID, dataChange  })(Detay); // eslint-disable-line
+export default connect(mapStateToProps, { ilceIsim, sehirIsim, ulkeIsim, ulkeID, sehirID, ilceID, dataChange })(Detay); // eslint-disable-line

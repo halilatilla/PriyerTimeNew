@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, Platform, StyleSheet } from 'react-native';
+import { View, Platform, StyleSheet, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import ModalFilterPicker from 'react-native-modal-filter-picker';
 import { Actions } from 'react-native-router-flux';
 import axios from 'axios';
-import { ilceID, ilceIsim, dataChange } from '../redux/actions/index';
+import { ilceID, ilceIsim, dataChange, sehirIsim, ulkeIsim } from '../redux/actions/index';
 import Spinner from './Spinner';
 
 
@@ -44,23 +44,42 @@ class IlceSec extends Component {
             visible: false,
             label
         });
-       await this.props.ilceID({
+      await this.props.ilceID({
             ilceid: picked
-        });
-        
-        Actions.Detay({ type: 'reset' });// react-native-router-flux sayesinde 
-        //tıklandığında Detay componentine aktarıyor
-        this.component();
+        });  
+         
+        this.component();  
+        console.log('ilce sec onselect sonu');    
     }
-    component() {
-        axios.get(`https://ezanvakti.herokuapp.com/vakitler?ilce=${this.props.ilceid}`)
-        .then(response => this.props.dataChange({ datavakitler: response.data }))
+    component = async () => {
+        console.log('ilce sec datavakitler');
+        console.log(this.props.ilceid);
+        
+      await axios.get(`https://ezanvakti.herokuapp.com/vakitler?ilce=${this.props.ilceid}`)
+        .then(resp => this.props.dataChange({ datavakitler: resp.data }))
         .catch(error => {
               console.log(error);
               throw error;
         });  
+        console.log('ilce sec datavakitler sonu');
+        await this.componentD();
+        Actions.Detay({ type: 'reset' });
     }
 
+    componentD = async () => { //eslint-disable-line
+        console.log('Son Data içinde');
+        if (this.props.sehirisim === '') {
+            try {
+                const localdata = await AsyncStorage.getItem('localdata');
+                const parsed = JSON.parse(localdata);
+                 this.props.ulkeIsim({ ulkeisim: parsed.ulke });
+                 this.props.sehirIsim({ sehirisim: parsed.sehir });
+          } catch (error) {
+                console.log(error);
+          }
+        }           
+  }
+    
     render() {
         console.log(this.state.datailce);
         const { visible } = this.state;
@@ -100,10 +119,11 @@ const styles = StyleSheet.create({
 );
 
 const mapStateToProps = ({ dataResponse }) => {
-    const { sehirid, ulkeisim, sehirisim, ilceid } = dataResponse;
+    const { sehirid, ilceid } = dataResponse;
     return {
-        sehirid, ulkeisim, sehirisim, ilceid
+        sehirid, ilceid
     };
 };
 
-export default connect(mapStateToProps, { ilceID, ilceIsim, dataChange })(IlceSec);
+export default connect(mapStateToProps, 
+    { ilceID, ilceIsim, dataChange, sehirIsim, ulkeIsim })(IlceSec);
