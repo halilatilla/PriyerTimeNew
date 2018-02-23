@@ -212,7 +212,7 @@ class Detay extends Component {
                               <View style={styles.buttonStyle}>
                                     <Button
                                           style={{ flex: 1 }}
-                                          onPress={this.buttonMain} title='KONUM SEÇ'
+                                          onPress={this.buttonMain} title='konum'
                                     />
                               </View>
 
@@ -244,7 +244,7 @@ class Detay extends Component {
                         <View style={styles.buttonStyle}>
                               <Button
                                     style={{ flex: 1 }}
-                                    onPress={this.buttonMain} title='KONUM SEÇ'
+                                    onPress={this.buttonMain} title='konum'
                               />
                         </View>
 
@@ -267,7 +267,7 @@ class Detay extends Component {
                                     <View style={styles.buttonStyle}>
                                           <Button
                                                 style={{ flex: 1 }}
-                                                onPress={this.buttonMain} title='KONUM SEÇ'
+                                                onPress={this.buttonMain} title='konum'
                                           />
                                     </View>
 
@@ -285,7 +285,7 @@ class Detay extends Component {
                               <View style={styles.buttonStyle}>
                                     <Button
                                           style={{ flex: 1 }}
-                                          onPress={this.buttonMain} title='KONUM SEÇ'
+                                          onPress={this.buttonMain} title='konum'
                                     />
                               </View>
 
