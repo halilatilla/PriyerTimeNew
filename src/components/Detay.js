@@ -15,6 +15,7 @@ class Detay extends Component {
       constructor() {
             super();
             this.state = {
+                  mainscreenload: true,
                   loading: true,
                   localvakitler: [],
                   localulkeisim: '',
@@ -26,6 +27,8 @@ class Detay extends Component {
 
 
       componentWillMount() {
+            console.log('ComponentWillMount içinde ');
+
             if ((this.props.ilcead !== '')) {
                   const sondatatüm = {
                         ulke: this.props.ulkeisim,
@@ -39,33 +42,40 @@ class Detay extends Component {
 
                   AsyncStorage.setItem('localdata', JSON.stringify(sondatatüm));
                   console.log(sondatatüm);
-                  console.log('ComponentDidMount İf içinde data gönderiliyor');
+                  console.log('ComponentWillMount İf içinde data gönderiliyor');
+                  this.state.mainscreenload = false;
             }
       }
 
       componentDidMount = async () => {
             console.log('Son Data içinde');
-                  try {
-                        const localdata = await AsyncStorage.getItem('localdata');
-                        const parsed = JSON.parse(localdata);
-                        console.log(parsed);
-                        console.log('Son data Try içinde');
+            try {
+                  const localdata = await AsyncStorage.getItem('localdata');
+                  const parsed = JSON.parse(localdata);
+                  console.log(parsed);
+                  console.log('Son data Try içinde');
 
-                        this.setState({
-                              localvakitler: parsed.vakitlocal,
-                              localulkeisim: parsed.ulke,
-                              localsehirisim: parsed.sehir,
-                              localilceisim: parsed.ilce,
-                        });
-
-                        //  this.props.dataChange({ datavakitler: parsed.vakitlocal });
-                         this.props.ulkeID({ ulkeid: parsed.ulkeidlocal });
-                         this.props.sehirID({ sehirid: parsed.sehiridlocal });
-                         this.props.ilceID({ ilceid: parsed.ilceidlocal });
-                  } catch (error) {
-                        console.log(error);
-                  }
+                  this.setState({
+                        localvakitler: parsed.vakitlocal,
+                        localulkeisim: parsed.ulke,
+                        localsehirisim: parsed.sehir,
+                        localilceisim: parsed.ilce,
+                  });
+                  this.props.ulkeID({ ulkeid: parsed.ulkeidlocal });
+                  this.props.sehirID({ sehirid: parsed.sehiridlocal });
+                  this.props.ilceID({ ilceid: parsed.ilceidlocal });
+            } catch (error) {
+                  console.log(error);
+            }
+            // setInterval(() => {
+            //       this.setState({
+            //             curtime: new Date().toLocaleTimeString()
+            //       });
+            // }, 1000);
       }
+      // componentWillUnmount() {
+      //       clearInterval(this.state.curtime);
+      // }
 
       buttonMain = () => {
             Actions.Ulke({ type: 'reset' });
@@ -82,7 +92,21 @@ class Detay extends Component {
 
       /* eslint-disable */ /* eslint-enable */
       render() {
-            console.log('Render');
+            console.log('render1 içinde');
+
+            const spinner = (
+                  <View >
+                        <Spinner />
+                  </View>
+            );
+            const konumButton = (
+                  <View style={styles.buttonStyle}>
+                        <Button
+                              style={{ flex: 1 }}
+                              onPress={this.buttonMain} title='KONUM SEÇ'
+                        />
+                  </View>
+            );
 
             const mapGelenData = this.state.localvakitler.map((resp, id) => {// eslint-disable-line
                   if (id === 0) {
@@ -184,76 +208,58 @@ class Detay extends Component {
 
                   </View>
             );
+            const isimKontrolUlkeAndilce = (
+                  <View style={styles.touchableviewStyle} >
+                        <TouchableOpacity
+                              onPress={this.buttonUlke}
+                              style={styles.touchableStyle}
+                        >
+                              <Text style={styles.textToubleIn}>
+                                    {this.state.localulkeisim} </Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                              onPress={this.buttonIlce} style={styles.touchableStyle}
+                        >
+                              <Text style={styles.textToubleIn}>
+                                    {this.state.localilceisim} </Text>
+                        </TouchableOpacity>
+                  </View>
+            );
+
+            console.log('render2 içinde');
             if (this.state.localsehirisim === this.state.localulkeisim) {
+                  console.log('if içinde');
                   //ülke ismi ile şehir ismi aynı ise şehir ismini gösterme
                   if (this.state.loading) {
                         // mapGelen datası dolmadı ise Spinner göster
                         return (<ImageBackground
                               source={backgroundImage}
-                              style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }}
+                              style={{
+                                    flex: 1,
+                                    marginTop: Platform.OS === 'ios' ? 21 : null
+                              }}
                         >
-                              <View style={styles.touchableviewStyle} >
-                                    <TouchableOpacity
-                                          onPress={this.buttonUlke}
-                                          style={styles.touchableStyle}
-                                    >
-                                          <Text style={styles.textToubleIn}>
-                                                {this.state.localulkeisim} </Text>
-                                    </TouchableOpacity>
-
-                                    <TouchableOpacity
-                                          onPress={this.buttonIlce} style={styles.touchableStyle}
-                                    >
-                                          <Text style={styles.textToubleIn}>
-                                                {this.state.localilceisim} </Text>
-                                    </TouchableOpacity>
-
-                              </View>
-                              <View style={styles.buttonStyle}>
-                                    <Button
-                                          style={{ flex: 1 }}
-                                          onPress={this.buttonMain} title='konum'
-                                    />
+                              <View 
+                              style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} 
+                              >
+                                    {spinner}
+                                    {this.state.mainscreenload === true && konumButton}
                               </View>
 
-                              <View style={styles.containerStyle}>
-                                    <Spinner />
-                              </View>
                         </ImageBackground>
                         );
                   } return (<ImageBackground
                         source={backgroundImage}
                         style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }}
                   >
-                        <View style={styles.touchableviewStyle} >
-                              <TouchableOpacity
-                                    onPress={this.buttonUlke} style={styles.touchableStyle}
-                              >
-                                    <Text style={styles.textToubleIn}>
-                                          {this.state.localulkeisim} </Text>
-                              </TouchableOpacity>
-
-                              <TouchableOpacity
-                                    onPress={this.buttonIlce} style={styles.touchableStyle}
-                              >
-                                    <Text style={styles.textToubleIn}>
-                                          {this.state.localilceisim} </Text>
-                              </TouchableOpacity>
-
-                        </View>
-                        <View style={styles.buttonStyle}>
-                              <Button
-                                    style={{ flex: 1 }}
-                                    onPress={this.buttonMain} title='konum'
-                              />
-                        </View>
-
-                        <View style={styles.containerStyle}>
-                              {mapGelenData}
-                        </View>
+                        {isimKontrolUlkeAndilce}
+                        {mapGelenData}
                   </ImageBackground>
                   );
             } else if (this.state.localsehirisim !== this.state.localulkeisim) {
+                  console.log('else if içinde');
+
                   if (this.state.loading) {
                         return (
                               <ImageBackground
@@ -263,38 +269,24 @@ class Detay extends Component {
                                           marginTop: Platform.OS === 'ios' ? 21 : null
                                     }}
                               >
-                                    {isimKontrol}
-                                    <View style={styles.buttonStyle}>
-                                          <Button
-                                                style={{ flex: 1 }}
-                                                onPress={this.buttonMain} title='konum'
-                                          />
-                                    </View>
-
-                                    <View style={styles.containerStyle}>
-                                          <Spinner />
-                                    </View>
+                                    {spinner}
                               </ImageBackground>
                         );
                   } return (
                         <ImageBackground
                               source={backgroundImage}
-                              style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }}
+                              style={{
+                                    flex: 1,
+                                    marginTop: Platform.OS === 'ios' ? 21 : null
+                              }}
                         >
                               {isimKontrol}
-                              <View style={styles.buttonStyle}>
-                                    <Button
-                                          style={{ flex: 1 }}
-                                          onPress={this.buttonMain} title='konum'
-                                    />
-                              </View>
-
                               {mapGelenData}
 
                         </ImageBackground>
                   );
             }
-      }
+      }//render sonu
 }
 
 const styles = StyleSheet.create({
@@ -401,17 +393,36 @@ const styles = StyleSheet.create({
 
       },
       buttonStyle: {
-            margin: Platform.OS === 'ios' ? '2%' : '3%',
-            marginLeft: '30%',
-            marginRight: '30%',
+            //margin: Platform.OS === 'ios' ? '2%' : '3%',
+           // marginLeft: '30%',
+           // marginRight: '30%',
             alignItems: 'center',
+            justifyContent: 'center',
             backgroundColor: Platform.OS === 'ios' ? 'rgba(166, 201, 242, 0.6)' : null,
             borderRadius: 5,
+            //flex: 1
             // shadowColor: 'blue',
             // shadowOpacity: 0.4,
             // shadowOffset: { width: 0, height: 2 },
             // shadowRadius: 3,
-      }
+      },
+      // kalanSureViwe: {
+      //       margin: Platform.OS === 'ios' ? '2%' : '3%',
+      //       marginLeft: '30%',
+      //       marginRight: '30%',
+      //       backgroundColor: 'rgba(166, 201, 242, 0.6)',
+      //       borderRadius: 5,
+      //       padding: 3,
+      //       alignItems: 'center',
+      // },
+      // kalanSureText: {
+      //       fontSize: 20,
+      //       padding: 2,
+      //       fontWeight: 'bold',
+      //       alignItems: 'center',
+      //       color: 'black',
+      //       fontFamily: Platform.OS === 'ios' ? 'Helvetica' : 'notoserif',
+      // }
 }
 );
 
