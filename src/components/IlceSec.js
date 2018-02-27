@@ -49,12 +49,8 @@ class IlceSec extends Component {
         });  
          
         this.component();  
-        console.log('ilce sec onselect sonu');    
     }
-    component = async () => {
-        console.log('ilce sec datavakitler');
-        console.log(this.props.ilceid);
-        
+    component = async () => {        
       await axios.get(`https://ezanvakti.herokuapp.com/vakitler?ilce=${this.props.ilceid}`)
         .then(resp => this.props.dataChange({ datavakitler: resp.data }))
         .catch(error => {

@@ -52,7 +52,6 @@ class SehirSec extends Component {
     }
 
     componentD = async () => { //eslint-disable-line
-        console.log('Son Data içinde');
         if (this.props.ulkeisim === '') {
             try {
                 const localdata = await AsyncStorage.getItem('localdata');

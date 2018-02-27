@@ -22,13 +22,10 @@ class Detay extends Component {
                   localsehirisim: '',
                   localilceisim: '',
             };
-            console.log('Constructor');
       }
 
 
       componentWillMount() {
-            console.log('ComponentWillMount içinde ');
-
             if ((this.props.ilcead !== '')) {
                   const sondatatüm = {
                         ulke: this.props.ulkeisim,
@@ -41,19 +38,14 @@ class Detay extends Component {
                   };
 
                   AsyncStorage.setItem('localdata', JSON.stringify(sondatatüm));
-                  console.log(sondatatüm);
-                  console.log('ComponentWillMount İf içinde data gönderiliyor');
                   this.state.mainscreenload = false;
             }
       }
 
       componentDidMount = async () => {
-            console.log('Son Data içinde');
             try {
                   const localdata = await AsyncStorage.getItem('localdata');
                   const parsed = JSON.parse(localdata);
-                  console.log(parsed);
-                  console.log('Son data Try içinde');
 
                   this.setState({
                         localvakitler: parsed.vakitlocal,
@@ -67,15 +59,8 @@ class Detay extends Component {
             } catch (error) {
                   console.log(error);
             }
-            // setInterval(() => {
-            //       this.setState({
-            //             curtime: new Date().toLocaleTimeString()
-            //       });
-            // }, 1000);
-      }
-      // componentWillUnmount() {
-      //       clearInterval(this.state.curtime);
-      // }
+                  }
+ 
 
       buttonMain = () => {
             Actions.Ulke({ type: 'reset' });
@@ -92,8 +77,6 @@ class Detay extends Component {
 
       /* eslint-disable */ /* eslint-enable */
       render() {
-            console.log('render1 içinde');
-
             const spinner = (
                   <View >
                         <Spinner />
@@ -226,12 +209,9 @@ class Detay extends Component {
                         </TouchableOpacity>
                   </View>
             );
-
-            console.log('render2 içinde');
             if (this.state.localsehirisim === this.state.localulkeisim) {
-                  console.log('if içinde');
                   //ülke ismi ile şehir ismi aynı ise şehir ismini gösterme
-                  if (this.state.loading) {
+                if (this.state.loading) {
                         // mapGelen datası dolmadı ise Spinner göster
                         return (<ImageBackground
                               source={backgroundImage}
@@ -258,8 +238,6 @@ class Detay extends Component {
                   </ImageBackground>
                   );
             } else if (this.state.localsehirisim !== this.state.localulkeisim) {
-                  console.log('else if içinde');
-
                   if (this.state.loading) {
                         return (
                               <ImageBackground
