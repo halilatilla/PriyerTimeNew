@@ -25,7 +25,6 @@ class Detay extends Component {
             };
       }
 
-
       componentWillMount() {
             if ((this.props.ilcead !== '')) {
                   const sondatatüm = {
@@ -41,11 +40,13 @@ class Detay extends Component {
                   AsyncStorage.setItem('localdata', JSON.stringify(sondatatüm));
                   this.state.mainscreenload = false;
             }
-            setInterval(() => {
-
-            });
+      //      this.inrervl = setInterval(() => {
+      //             console.log('inderval detay');
+      //             this.setState({
+      //             });
+      //       }, 60000 * 60);
       }
-      
+
       componentDidMount = async () => {
             try {
                   const localdata = await AsyncStorage.getItem('localdata');
@@ -63,9 +64,11 @@ class Detay extends Component {
             } catch (error) {
                   console.log(error);
             }
-                  }
- 
+      }
 
+      // componentWillUnmount() {
+      //       clearInterval(this.inrervl);
+      //   }
       buttonMain = () => {
             Actions.Ulke({ type: 'reset' });
       }
@@ -91,9 +94,9 @@ class Detay extends Component {
                         <Button
                               style={{ flex: 1 }}
                               onPress={this.buttonMain} title='KONUM SEÇ'
-                              
+
                         />
-                        
+
                   </View>
             );
             const mapGelenData = this.state.localvakitler.map((resp, id) => {// eslint-disable-line
@@ -214,8 +217,10 @@ class Detay extends Component {
                   </View>
             );
             if (this.state.localsehirisim === this.state.localulkeisim) {
+                  console.log('sehir=ulke');
+                  
                   //ülke ismi ile şehir ismi aynı ise şehir ismini gösterme
-                if (this.state.loading) {
+                  if (this.state.loading) {
                         // mapGelen datası dolmadı ise Spinner göster
                         return (<ImageBackground
                               source={backgroundImage}
@@ -224,8 +229,8 @@ class Detay extends Component {
                                     marginTop: Platform.OS === 'ios' ? 21 : null
                               }}
                         >
-                              <View 
-                              style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} 
+                              <View
+                                    style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
                               >
                                     {spinner}
                                     {this.state.mainscreenload === true && konumButton}
@@ -243,6 +248,8 @@ class Detay extends Component {
                   </ImageBackground>
                   );
             } else if (this.state.localsehirisim !== this.state.localulkeisim) {
+                  console.log('sehir!!!=ulke');
+
                   if (this.state.loading) {
                         return (
                               <ImageBackground
@@ -377,8 +384,8 @@ const styles = StyleSheet.create({
       },
       buttonStyle: {
             //margin: Platform.OS === 'ios' ? '2%' : '3%',
-           // marginLeft: '30%',
-           // marginRight: '30%',
+            // marginLeft: '30%',
+            // marginRight: '30%',
             alignItems: 'center',
             justifyContent: 'center',
             backgroundColor: Platform.OS === 'ios' ? 'rgba(166, 201, 242, 0.6)' : null,

@@ -3,7 +3,6 @@ import {
     Text, View, StyleSheet, Platform, AsyncStorage
 } from 'react-native';
 import { connect } from 'react-redux';
-import Spinner from './Spinner';
 
 class KalanSure extends Component {
     constructor() {
@@ -26,18 +25,24 @@ class KalanSure extends Component {
         } catch (error) {
             console.log(error);
         }
+       this.interval = setInterval(() => {
+            this.setState({});
+            console.log('setınterval');     
+        }, 60000);
     }
-    VAKIT = [{ imsak: 'Imsak', ogle: 'Ogle', ikindi: 'Ikindi', aksam: 'Aksam', yatsi: 'Yatsi' }];
 
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
 
-    render() {
+    render() { 
         if (this.state.load) {
             const currentTime = new Date();
             const yil = currentTime.getFullYear();
             const ay = currentTime.getMonth();
             const gun = currentTime.getDate();
 
-           // imsak
+            // imsak
             const imsakdiyanetsaat = this.state.localvakitler.map((resp) => {
                 return resp.Imsak.charAt(0).slice(0, 1)
                     + resp.Imsak.charAt(1).slice(0, 1);
@@ -307,7 +312,45 @@ class KalanSure extends Component {
                 </View>
             );
         } return (
-            <Spinner style={{ justifyContent: 'center', alignItems: 'center' }} />
+           // <Spinner style={{ justifyContent: 'center', alignItems: 'center' }} />
+           <View style={styles.kalanSureView} >
+
+           <Text style={styles.vakitYazi}>
+               Vaktin Çıkmasına
+            </Text>
+           <View
+               style={{
+                   flexDirection: 'row',
+                   justifyContent: 'center',
+                   alignItems: 'center'
+               }}
+           >
+               <View>
+                   <Text style={styles.kalanSureText}> 
+                      {}
+                   </Text>
+               </View>
+
+               <View
+                   style={{
+                       justifyContent: 'center',
+                       alignItems: 'center',
+                       marginRight: 5
+                   }}
+               >
+                   <Text style={styles.kalanSureText}>:</Text>
+               </View>
+
+               <View>
+                   <Text style={styles.kalanSureText}>
+                     
+                           (<Text style={styles.kalanSureText}>{} </Text>)
+                        
+                   </Text>
+               </View>
+           </View>
+       </View>
+
         );
     }//render sonu
 }
