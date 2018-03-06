@@ -57,7 +57,6 @@ class IlceSec extends Component {
               console.log(error);
               throw error;
         });  
-        console.log('ilce sec datavakitler sonu');
         await this.componentD();
         Actions.Detay({ type: 'reset' });
     }

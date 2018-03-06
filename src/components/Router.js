@@ -11,7 +11,7 @@ import Detay from './Detay';
 const RouterComponent = () => {
     return (
         <Router>
-            <Scene key="root" >
+            <Scene key="modal" >
                 <Scene key="Detay" component={Detay} hideNavBar />
                 <Scene key="Ulke" component={UlkeSec} hideNavBar />
                 <Scene key="Sehir" component={SehirSec} hideNavBar />

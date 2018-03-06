@@ -1,6 +1,7 @@
 {
     "extends": "rallycoding",
     "rules": {
-        "arrow-body-style":"off"
+        "arrow-body-style":"off",
+        "max-len":"off"
     }
 }

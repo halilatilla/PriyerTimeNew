@@ -9,6 +9,7 @@ import { ilceIsim, sehirIsim, ulkeIsim, ulkeID, sehirID, ilceID, dataChange }
       from '../redux/actions/index';
 import backgroundImage from '../assets/backgroundimage.jpg';
 import Spinner from './Spinner';
+import KalanSure from './KalanSure';
 
 
 class Detay extends Component {
@@ -40,8 +41,11 @@ class Detay extends Component {
                   AsyncStorage.setItem('localdata', JSON.stringify(sondatatüm));
                   this.state.mainscreenload = false;
             }
-      }
+            setInterval(() => {
 
+            });
+      }
+      
       componentDidMount = async () => {
             try {
                   const localdata = await AsyncStorage.getItem('localdata');
@@ -87,10 +91,11 @@ class Detay extends Component {
                         <Button
                               style={{ flex: 1 }}
                               onPress={this.buttonMain} title='KONUM SEÇ'
+                              
                         />
+                        
                   </View>
             );
-
             const mapGelenData = this.state.localvakitler.map((resp, id) => {// eslint-disable-line
                   if (id === 0) {
                         return (<View key={id} style={styles.containerStyle}>
@@ -174,7 +179,6 @@ class Detay extends Component {
                   }
                   this.state.loading = false;
             });
-
             const isimKontrol = (
                   <View style={styles.touchableviewStyle} >
                         <TouchableOpacity onPress={this.buttonUlke} style={styles.touchableStyle} >
@@ -234,6 +238,7 @@ class Detay extends Component {
                         style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }}
                   >
                         {isimKontrolUlkeAndilce}
+                        <KalanSure />
                         {mapGelenData}
                   </ImageBackground>
                   );
@@ -259,8 +264,8 @@ class Detay extends Component {
                               }}
                         >
                               {isimKontrol}
+                              <KalanSure />
                               {mapGelenData}
-
                         </ImageBackground>
                   );
             }
@@ -383,24 +388,7 @@ const styles = StyleSheet.create({
             // shadowOpacity: 0.4,
             // shadowOffset: { width: 0, height: 2 },
             // shadowRadius: 3,
-      },
-      // kalanSureViwe: {
-      //       margin: Platform.OS === 'ios' ? '2%' : '3%',
-      //       marginLeft: '30%',
-      //       marginRight: '30%',
-      //       backgroundColor: 'rgba(166, 201, 242, 0.6)',
-      //       borderRadius: 5,
-      //       padding: 3,
-      //       alignItems: 'center',
-      // },
-      // kalanSureText: {
-      //       fontSize: 20,
-      //       padding: 2,
-      //       fontWeight: 'bold',
-      //       alignItems: 'center',
-      //       color: 'black',
-      //       fontFamily: Platform.OS === 'ios' ? 'Helvetica' : 'notoserif',
-      // }
+      }
 }
 );
 
