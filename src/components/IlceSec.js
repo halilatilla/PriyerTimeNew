@@ -51,8 +51,10 @@ class IlceSec extends Component {
         this.component();  
     }
     component = async () => {        
+        //this.props.dataChange({ datavakitler: resp.data })
       await axios.get(`https://ezanvakti.herokuapp.com/vakitler?ilce=${this.props.ilceid}`)
-        .then(resp => this.props.dataChange({ datavakitler: resp.data }))
+        .then(resp => this.props.dataChange({ datavakitler: resp.data })
+        )
         .catch(error => {
               console.log(error);
               throw error;
@@ -62,7 +64,6 @@ class IlceSec extends Component {
     }
 
     componentD = async () => { //eslint-disable-line
-        console.log('Son Data içinde');
         if (this.props.sehirisim === '') {
             try {
                 const localdata = await AsyncStorage.getItem('localdata');
@@ -76,8 +77,6 @@ class IlceSec extends Component {
   }
     
     render() {
-        console.log(this.props.sehirisim);
-        console.log(this.state.datailce);
         const { visible } = this.state;
         if (this.state.datailce === '') {
             return (

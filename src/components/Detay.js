@@ -5,23 +5,28 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
+//import axios from 'axios';
+import Drawer from 'react-native-drawer';
 import { ilceIsim, sehirIsim, ulkeIsim, ulkeID, sehirID, ilceID, dataChange }
       from '../redux/actions/index';
 import backgroundImage from '../assets/backgroundimage.jpg';
 import Spinner from './Spinner';
 import KalanSure from './KalanSure';
+import DrawerContent from './DrawerContent';
 
 
 class Detay extends Component {
       constructor() {
             super();
             this.state = {
+                  spinnervisible: true,
                   mainscreenload: true,
                   loading: true,
                   localvakitler: [],
                   localulkeisim: '',
                   localsehirisim: '',
                   localilceisim: '',
+                  localilceid: ''
             };
       }
 
@@ -40,11 +45,11 @@ class Detay extends Component {
                   AsyncStorage.setItem('localdata', JSON.stringify(sondatatüm));
                   this.state.mainscreenload = false;
             }
-      //      this.inrervl = setInterval(() => {
-      //             console.log('inderval detay');
-      //             this.setState({
-      //             });
-      //       }, 60000 * 60);
+            //      this.inrervl = setInterval(() => {
+            //             console.log('inderval detay');
+            //             this.setState({
+            //             });
+            //       }, 60000 * 60);
       }
 
       componentDidMount = async () => {
@@ -57,6 +62,7 @@ class Detay extends Component {
                         localulkeisim: parsed.ulke,
                         localsehirisim: parsed.sehir,
                         localilceisim: parsed.ilce,
+                        localilceid: parsed.ilceidlocal
                   });
                   this.props.ulkeID({ ulkeid: parsed.ulkeidlocal });
                   this.props.sehirID({ sehirid: parsed.sehiridlocal });
@@ -84,6 +90,31 @@ class Detay extends Component {
 
       /* eslint-disable */ /* eslint-enable */
       render() {
+            // if (this.state.localvakitler.length > 0) {
+            //       const diyanetgun = this.state.localvakitler.map((ret, id) => {// eslint-disable-line
+            //             if (id === 0) {
+            //                   return (ret.MiladiTarihKisa.charAt(1).slice(0, 1));
+            //             }
+            //       });
+            //       const date = new Date();
+            //       if (Number(...diyanetgun) !== date.getDate()) {
+            //             console.log('dsfdsfsdf');
+                        
+            //        axios.get(`https://ezanvakti.herokuapp.com/vakitler?ilce=${this.state.localilceid}`)
+            //             .then(resp => this.setState({ localvakitler: resp.data })
+            //             )
+            //             .catch(error => {
+            //                   console.log(error);
+            //                   throw error;
+            //             });                       
+            //       }
+            // }
+
+            
+           // console.log(Number(...diyanetgun));
+            
+            //Number(...diyanetgun) !== date.getDate()
+            
             const spinner = (
                   <View >
                         <Spinner />
@@ -96,92 +127,88 @@ class Detay extends Component {
                               onPress={this.buttonMain} title='KONUM SEÇ'
 
                         />
-
                   </View>
             );
-            const mapGelenData = this.state.localvakitler.map((resp, id) => {// eslint-disable-line
-                  if (id === 0) {
-                        return (<View key={id} style={styles.containerStyle}>
-                              <View style={styles.vakitlerViewStyle} >
-                                    <Text style={styles.tarihText}>{resp.MiladiTarihKisa}</Text>
-                              </View>
+            const mapGelenDatanew = (<View style={styles.containerStyle}>
+                                    <View style={styles.vakitlerViewStyle} >
+                                          <Text style={styles.tarihText}>{this.state.localvakitler.length > 0 && this.state.localvakitler[0].MiladiTarihKisa}</Text>
+                                    </View>
+      
+                                    <View style={styles.vakitlerViewStyle}>
+                                          <View style={styles.vakitView}>
+                                                <Text style={styles.vakitYazi}>İmsak</Text>
+                                          </View>
+                                          <View style={styles.noktaView}>
+                                                <Text style={styles.vakitNokta}>:</Text>
+                                          </View>
+                                          <View style={styles.tarihView}>
+                                                <Text style={styles.vakitTarih}>{this.state.localvakitler.length > 0 && this.state.localvakitler[0].Imsak}</Text>
+                                          </View>
+                                    </View>
+      
+                                    <View style={styles.vakitlerViewStyle}>
+                                          <View style={styles.vakitView}>
+                                                <Text style={styles.vakitYazi}>Güneş</Text>
+                                          </View>
+                                          <View style={styles.noktaView}>
+                                                <Text style={styles.vakitNokta}>:</Text>
+                                          </View>
+                                          <View style={styles.tarihView}>
+                                                <Text style={styles.vakitTarih}>{this.state.localvakitler.length > 0 && this.state.localvakitler[0].Gunes}</Text>
+                                          </View>
+                                    </View>
+      
+                                    <View style={styles.vakitlerViewStyle}>
+                                          <View style={styles.vakitView}>
+                                                <Text style={styles.vakitYazi}>Öğle</Text>
+                                          </View>
+                                          <View style={styles.noktaView}>
+                                                <Text style={styles.vakitNokta}>:</Text>
+                                          </View>
+                                          <View style={styles.tarihView}>
+                                                <Text style={styles.vakitTarih}>{this.state.localvakitler.length > 0 && this.state.localvakitler[0].Ogle}</Text>
+                                          </View>
+                                    </View>
+      
+                                    <View style={styles.vakitlerViewStyle}>
+                                          <View style={styles.vakitView}>
+                                                <Text style={styles.vakitYazi}>İkindi</Text>
+                                          </View>
+                                          <View style={styles.noktaView}>
+                                                <Text style={styles.vakitNokta}>:</Text>
+                                          </View>
+                                          <View style={styles.tarihView}>
+                                                <Text style={styles.vakitTarih}>{this.state.localvakitler.length > 0 && this.state.localvakitler[0].Ikindi}</Text>
+                                          </View>
+                                    </View>
+      
+                                    <View style={styles.vakitlerViewStyle}>
+                                          <View style={styles.vakitView}>
+                                                <Text style={styles.vakitYazi}>Akşam</Text>
+                                          </View>
+                                          <View style={styles.noktaView}>
+                                                <Text style={styles.vakitNokta}>:</Text>
+                                          </View>
+                                          <View style={styles.tarihView}>
+                                                <Text style={styles.vakitTarih}>{this.state.localvakitler.length > 0 && this.state.localvakitler[0].Aksam}</Text>
+                                          </View>
+                                    </View>
+      
+                                    <View style={styles.vakitlerViewStyle}>
+                                          <View style={styles.vakitView}>
+                                                <Text style={styles.vakitYazi}>Yatsı</Text>
+                                          </View>
+                                          <View style={styles.noktaView}>
+                                                <Text style={styles.vakitNokta}>:</Text>
+                                          </View>
+                                          <View style={styles.tarihView}>
+                                                <Text style={styles.vakitTarih}>{this.state.localvakitler.length > 0 && this.state.localvakitler[0].Yatsi}</Text>
+                                          </View>
+                                    </View>
+      
+                              </View>);
+                        this.state.loading = false;                             
 
-                              <View style={styles.vakitlerViewStyle}>
-                                    <View style={styles.vakitView}>
-                                          <Text style={styles.vakitYazi}>İmsak</Text>
-                                    </View>
-                                    <View style={styles.noktaView}>
-                                          <Text style={styles.vakitNokta}>:</Text>
-                                    </View>
-                                    <View style={styles.tarihView}>
-                                          <Text style={styles.vakitTarih}>{resp.Imsak}</Text>
-                                    </View>
-                              </View>
-
-                              <View style={styles.vakitlerViewStyle}>
-                                    <View style={styles.vakitView}>
-                                          <Text style={styles.vakitYazi}>Güneş</Text>
-                                    </View>
-                                    <View style={styles.noktaView}>
-                                          <Text style={styles.vakitNokta}>:</Text>
-                                    </View>
-                                    <View style={styles.tarihView}>
-                                          <Text style={styles.vakitTarih}>{resp.Gunes}</Text>
-                                    </View>
-                              </View>
-
-                              <View style={styles.vakitlerViewStyle}>
-                                    <View style={styles.vakitView}>
-                                          <Text style={styles.vakitYazi}>Öğle</Text>
-                                    </View>
-                                    <View style={styles.noktaView}>
-                                          <Text style={styles.vakitNokta}>:</Text>
-                                    </View>
-                                    <View style={styles.tarihView}>
-                                          <Text style={styles.vakitTarih}>{resp.Ogle}</Text>
-                                    </View>
-                              </View>
-
-                              <View style={styles.vakitlerViewStyle}>
-                                    <View style={styles.vakitView}>
-                                          <Text style={styles.vakitYazi}>İkindi</Text>
-                                    </View>
-                                    <View style={styles.noktaView}>
-                                          <Text style={styles.vakitNokta}>:</Text>
-                                    </View>
-                                    <View style={styles.tarihView}>
-                                          <Text style={styles.vakitTarih}>{resp.Ikindi}</Text>
-                                    </View>
-                              </View>
-
-                              <View style={styles.vakitlerViewStyle}>
-                                    <View style={styles.vakitView}>
-                                          <Text style={styles.vakitYazi}>Akşam</Text>
-                                    </View>
-                                    <View style={styles.noktaView}>
-                                          <Text style={styles.vakitNokta}>:</Text>
-                                    </View>
-                                    <View style={styles.tarihView}>
-                                          <Text style={styles.vakitTarih}>{resp.Aksam}</Text>
-                                    </View>
-                              </View>
-
-                              <View style={styles.vakitlerViewStyle}>
-                                    <View style={styles.vakitView}>
-                                          <Text style={styles.vakitYazi}>Yatsı</Text>
-                                    </View>
-                                    <View style={styles.noktaView}>
-                                          <Text style={styles.vakitNokta}>:</Text>
-                                    </View>
-                                    <View style={styles.tarihView}>
-                                          <Text style={styles.vakitTarih}>{resp.Yatsi}</Text>
-                                    </View>
-                              </View>
-
-                        </View>);
-                  }
-                  this.state.loading = false;
-            });
             const isimKontrol = (
                   <View style={styles.touchableviewStyle} >
                         <TouchableOpacity onPress={this.buttonUlke} style={styles.touchableStyle} >
@@ -216,9 +243,8 @@ class Detay extends Component {
                         </TouchableOpacity>
                   </View>
             );
+ 
             if (this.state.localsehirisim === this.state.localulkeisim) {
-                  console.log('sehir=ulke');
-                  
                   //ülke ismi ile şehir ismi aynı ise şehir ismini gösterme
                   if (this.state.loading) {
                         // mapGelen datası dolmadı ise Spinner göster
@@ -232,8 +258,8 @@ class Detay extends Component {
                               <View
                                     style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
                               >
-                                    {spinner}
-                                    {this.state.mainscreenload === true && konumButton}
+                                    {this.state.mainscreenload === true ? konumButton : spinner}
+
                               </View>
 
                         </ImageBackground>
@@ -242,14 +268,25 @@ class Detay extends Component {
                         source={backgroundImage}
                         style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 21 : null }}
                   >
-                        {isimKontrolUlkeAndilce}
-                        <KalanSure />
-                        {mapGelenData}
+                        <Drawer
+                              type="overlay"
+                              content={< DrawerContent />}
+                              tapToClose={false}
+                              openDrawerOffset={0.2} // 20% gap on the right side of drawer
+                              panCloseMask={0.2}
+                              closedDrawerOffset={-3}
+                              styles={drawerStyles}
+                              tweenHandler={(ratio) => ({
+                                    main: { opacity: (2 - ratio) / 2 }
+                              })}
+                        >
+                              {isimKontrolUlkeAndilce}
+                              <KalanSure />
+                              {mapGelenDatanew}
+                        </Drawer>
                   </ImageBackground>
                   );
             } else if (this.state.localsehirisim !== this.state.localulkeisim) {
-                  console.log('sehir!!!=ulke');
-
                   if (this.state.loading) {
                         return (
                               <ImageBackground
@@ -270,14 +307,29 @@ class Detay extends Component {
                                     marginTop: Platform.OS === 'ios' ? 21 : null
                               }}
                         >
-                              {isimKontrol}
-                              <KalanSure />
-                              {mapGelenData}
+                              <Drawer
+                                    type="overlay"
+                                    content={< DrawerContent />}
+                                    tapToClose
+                                    openDrawerOffset={0.2} // 20% gap on the right side of drawer
+                                    panCloseMask={0.2}
+                                    closedDrawerOffset={-3}
+                                    styles={drawerStyles}
+                                    tweenHandler={(ratio) => ({
+                                          main: { opacity: (2 - ratio) / 2 }
+                                    })}
+                              >
+                                    {isimKontrol}
+                                    <KalanSure />
+                                    {mapGelenDatanew}
+
+                              </Drawer>
+
                         </ImageBackground>
                   );
             }
       }//render sonu
-}
+}//component sonu
 
 const styles = StyleSheet.create({
       containerStyle: {
@@ -398,6 +450,11 @@ const styles = StyleSheet.create({
       }
 }
 );
+
+const drawerStyles = {
+      drawer: { shadowColor: '#000000', shadowOpacity: 0.8, shadowRadius: 3 },
+      main: { paddingLeft: 3 },
+};
 
 const mapStateToProps = ({ dataResponse }) => {
       const { datavakitler, ulkeisim, ilcead, sehirisim, ulkeid, sehirid, ilceid } = dataResponse;

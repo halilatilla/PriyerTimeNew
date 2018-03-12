@@ -5,8 +5,8 @@ const Spinner = () => {
     return (
         <View>
             <ActivityIndicator size={'large'} />
-            <Text> İnternete Bağlanılıyor </Text>
-            <Text>    Lütfen Bekleyiniz...</Text>
+            <Text > İnternete Bağlanılıyor </Text>
+            <Text >   Lütfen Bekleyiniz...</Text>
         </View>
 
     );
