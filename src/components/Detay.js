@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-//import axios from 'axios';
+import axios from 'axios';
 import Drawer from 'react-native-drawer';
 import { ilceIsim, sehirIsim, ulkeIsim, ulkeID, sehirID, ilceID, dataChange }
       from '../redux/actions/index';
@@ -90,30 +90,21 @@ class Detay extends Component {
 
       /* eslint-disable */ /* eslint-enable */
       render() {
-            // if (this.state.localvakitler.length > 0) {
-            //       const diyanetgun = this.state.localvakitler.map((ret, id) => {// eslint-disable-line
-            //             if (id === 0) {
-            //                   return (ret.MiladiTarihKisa.charAt(1).slice(0, 1));
-            //             }
-            //       });
-            //       const date = new Date();
-            //       if (Number(...diyanetgun) !== date.getDate()) {
-            //             console.log('dsfdsfsdf');
-                        
-            //        axios.get(`https://ezanvakti.herokuapp.com/vakitler?ilce=${this.state.localilceid}`)
-            //             .then(resp => this.setState({ localvakitler: resp.data })
-            //             )
-            //             .catch(error => {
-            //                   console.log(error);
-            //                   throw error;
-            //             });                       
-            //       }
-            // }
+            if (this.state.localvakitler.length > 0) {
+                  const diyanetgun = this.state.localvakitler[0].MiladiTarihKisa.slice(0, 2);   
+                  const date = new Date();
 
-            
-           // console.log(Number(...diyanetgun));
-            
-            //Number(...diyanetgun) !== date.getDate()
+                  if (Number(diyanetgun) !== date.getDate()) {                      
+                   axios.get(`https://ezanvakti.herokuapp.com/vakitler?ilce=${this.state.localilceid}`)
+                        .then(resp => this.setState({ localvakitler: resp.data })
+                        )
+                        .catch(error => {
+                              console.log(error);
+                              throw error;
+                        });  
+                  }
+            }
+          
             
             const spinner = (
                   <View >

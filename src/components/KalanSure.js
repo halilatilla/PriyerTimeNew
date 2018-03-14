@@ -53,7 +53,8 @@ class KalanSure extends Component {
             const currentTime = new Date();
             const localgelen = this.state.localvakitler[0];//diyanet sitesinden alınan vakitler
             // imsak
-
+            const imsakdiyanetsaatnew = localgelen.Imsak.substring(0, 2);
+            const imsakdiyanetdakikanew = localgelen.Imsak.substring(3, 5);
             //gunes
             const gunesdiyanetsaatnew = localgelen.Gunes.substring(0, 2);//alınan vakitlerden saat ve dakika alınıyor
             const gunesdiyanetdakikanew = localgelen.Gunes.substring(3, 5);
@@ -66,58 +67,88 @@ class KalanSure extends Component {
             // aksam
             const aksamdiyanetsaatnew = localgelen.Aksam.substring(0, 2);
             const aksamdiyanetdakikanew = localgelen.Aksam.substring(3, 5);
+            //yatsı
+            const yatsidiyanetsaatnew = localgelen.Yatsi.substring(0, 2);
+            const yatsidiyanetdakikanew = localgelen.Yatsi.substring(3, 5);
 
-            const imsakKalanfonc = this.kalanSureHesap(gunesdiyanetsaatnew, gunesdiyanetdakikanew);
+            const imsakKalanfonc = this.kalanSureHesap(imsakdiyanetsaatnew, imsakdiyanetdakikanew);
+            const gunesKalanfonc = this.kalanSureHesap(gunesdiyanetsaatnew, gunesdiyanetdakikanew);
             const ogleKalanfonc = this.kalanSureHesap(oglediyanetsaatnew, oglediyanetdakikanew);
             const ikindiKalanfonc = this.kalanSureHesap(ikindidiyanetsaatnew, ikindidiyanetdakikanew);
             const aksamKalanfonc = this.kalanSureHesap(aksamdiyanetsaatnew, aksamdiyanetdakikanew);
+            const yatsiKalanfonc = this.kalanSureHesap(yatsidiyanetsaatnew, yatsidiyanetdakikanew);
+
 
             // yatsı
             const yil = currentTime.getFullYear();
             const ay = currentTime.getMonth();
             const gun = currentTime.getDate();
             const diyanetgun = this.state.localvakitler[0].MiladiTarihKisa.substring(0, 2); 
-            const localgelenyatsi = Number(diyanetgun) === gun ? this.state.localvakitler[0] : this.state.localvakitler[1];
+            const localgelenyatsi = Number(diyanetgun) === gun ? this.state.localvakitler[1] : this.state.localvakitler[0];
             const imsakdiyanetsaatnewyatsi = localgelenyatsi.Imsak.substring(0, 2);            
             const imsakdiyanetdakikanewyatsi = localgelenyatsi.Imsak.substring(3, 5);
-            const yatsiKalan = Number(diyanetgun) === gun ? new Date(yil, ay, gun, Number(imsakdiyanetsaatnewyatsi), Number(imsakdiyanetdakikanewyatsi), 0, 0)
-             : new Date(yil, ay, gun + 1, Number(imsakdiyanetsaatnewyatsi), Number(imsakdiyanetdakikanewyatsi), 0, 0);
+            console.log(imsakdiyanetdakikanewyatsi);
+            
+            const yatsiKalan = Number(diyanetgun) === gun ? new Date(yil, ay, gun + 1, Number(imsakdiyanetsaatnewyatsi), Number(imsakdiyanetdakikanewyatsi), 0, 0)
+             : new Date(yil, ay, gun, Number(imsakdiyanetsaatnewyatsi), Number(imsakdiyanetdakikanewyatsi), 0, 0);
             const yatsiKalanSaat = Math.floor(((yatsiKalan.getTime() - currentTime.getTime()) / (1000 * 60 * 60)) % 24);
             const yatsiKalanDakika = Math.floor(((yatsiKalan.getTime() - currentTime.getTime()) / (1000 * 60)) % 60);
             
 
-            if ((imsakKalanfonc.Kalan.getTime() - currentTime.getTime()) >= 0) {
+            if ((currentTime.getTime() - gunesKalanfonc.Kalan.getTime()) < 0) {
+                console.log('imsak');
+                
                 return (
                     <KalanSureUi 
-                    diyanetsaat={imsakKalanfonc.KalanSaat} 
-                    diyanetdakika={imsakKalanfonc.KalanDakika} 
+                    diyanetsaat={gunesKalanfonc.KalanSaat} 
+                    diyanetdakika={gunesKalanfonc.KalanDakika} 
+                    text='Vaktin Çıkmasına'
                     />
                 );
-            } else if ((ogleKalanfonc.Kalan.getTime() - currentTime.getTime()) >= 0) {
+            } else if ((currentTime.getTime() - gunesKalanfonc.Kalan.getTime()) > 0 && (currentTime.getTime() - ogleKalanfonc.Kalan.getTime()) < 0) {
+                console.log('gunes');
+                
                 return (
                     <KalanSureUi 
                     diyanetsaat={ogleKalanfonc.KalanSaat} 
                     diyanetdakika={ogleKalanfonc.KalanDakika} 
+                    text='Öğle Vaktine'
                     />);
-            } else if ((ikindiKalanfonc.Kalan.getTime() - currentTime.getTime()) >= 0) {
+            } else if ((currentTime.getTime() - ikindiKalanfonc.Kalan.getTime()) < 0) {
+                console.log('oglen');
+                
                 return (
                     <KalanSureUi 
-                    diyanetsaat={ikindiKalanfonc.KalanSaat}
-                     diyanetdakika={ikindiKalanfonc.KalanDakika} 
+                    diyanetsaat={ikindiKalanfonc.KalanSaat} 
+                    diyanetdakika={ikindiKalanfonc.KalanDakika} 
+                    text='Vaktin Çıkmasına'
                     />);
-            } else if ((aksamKalanfonc.Kalan.getTime() - currentTime.getTime()) >= 0) {
+            } else if ((currentTime.getTime() - aksamKalanfonc.Kalan.getTime()) < 0) {
+                console.log('ikindi');
+                
                 return (
                     <KalanSureUi 
-                    diyanetsaat={aksamKalanfonc.KalanSaat} 
-                    diyanetdakika={aksamKalanfonc.KalanDakika} 
+                    diyanetsaat={aksamKalanfonc.KalanSaat}
+                     diyanetdakika={aksamKalanfonc.KalanDakika}
+                     text='Vaktin Çıkmasına' 
                     />);
-            } else if ((yatsiKalan.getTime() - currentTime.getTime()) >= 0) {
-                console.log('yatsooo');
+            } else if ((currentTime.getTime() - yatsiKalanfonc.Kalan.getTime()) < 0) {
+                console.log('aksam');
+                
+                return (
+                    <KalanSureUi 
+                    diyanetsaat={yatsiKalanfonc.KalanSaat} 
+                    diyanetdakika={yatsiKalanfonc.KalanDakika} 
+                    text='Vaktin Çıkmasına' 
+                    />);
+            } else if ((currentTime.getTime() - yatsiKalanfonc.Kalan.getTime()) >= 0) {
+                console.log('yatsı');
                 
                 return (
                     <KalanSureUi 
                     diyanetsaat={yatsiKalanSaat} 
                     diyanetdakika={yatsiKalanDakika} 
+                    text='Vaktin Çıkmasına'
                     />);         
             }           
         } return (
@@ -166,7 +197,7 @@ const KalanSureUi = props => (
   <View style={styles.kalanSureView} >
 
         <Text style={styles.vakitYazi}>
-            Vaktin Çıkmasına
+            {props.text}
         </Text>
         <View
             style={{
